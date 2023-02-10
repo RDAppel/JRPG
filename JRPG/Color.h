@@ -20,6 +20,6 @@ public:
 
 	Color(const float red = 1.0f, const float green = 1.0f, const float blue = 1.0f, const float alpha = 1.0f);
 
-	ALLEGRO_COLOR GetAllegroColor() const { return al_map_rgba(R, G, B, A); }
+	ALLEGRO_COLOR GetAllegroColor() const { return al_map_rgba_f(R, G, B, A); }
 };
 
