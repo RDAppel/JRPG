@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "_PCH.h"
 
 class Resource
 {

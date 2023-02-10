@@ -1,6 +1,5 @@
 
-#include "Game.h"
-#include "Texture.h"
+#include "_PCH.h"
 
 int Game::s_screenWidth = 1280;
 int Game::s_screenHeight = 768;
@@ -11,11 +10,14 @@ Game::Game()
 {
 	m_isInitialized = al_init();
 	m_resourceManager.SetContentPath("..\\JRPG\\Content\\");
+
+	m_pSpriteBatch = new SpriteBatch;
 }
 
 Game::~Game()
 {
 	delete m_pInputState;
+	delete m_pSpriteBatch;
 }
 
 void Game::Update(InputState* pInput)
@@ -43,11 +45,9 @@ int Game::Run()
 	ALLEGRO_EVENT_QUEUE* pEventQueue = al_create_event_queue();
 	ALLEGRO_TIMER* pTimer = al_create_timer(1 / m_targetFramesPerSecond);
 
+	m_pTexture = m_resourceManager.Load<Texture>("Textures\\Spritesheets\\Chest.png");
 
-	//bool isImageAddonInitialized = al_init_image_addon();
-	//ALLEGRO_BITMAP* pChestImage = al_load_bitmap("..\\JRPG\\Content\\Textures\\Spritesheets\\Chest.png");
-
-	Texture* pTexture = m_resourceManager.Load<Texture>("Textures\\Spritesheets\\Chest.png");
+	m_pFrameCounterFont = m_resourceManager.Load<Font>("Fonts\\Iceland.ttf");
 
 	ALLEGRO_EVENT alEvent;
 	al_start_timer(pTimer);
@@ -82,15 +82,13 @@ int Game::Run()
 		{
 			redraw = false;
 
-			al_clear_to_color(al_map_rgb(0, 0, 255));
-
-			al_draw_bitmap(pTexture->GetAllegroBitmap(), 32, 32, 0);
+			Draw(m_pSpriteBatch);
 
 			al_flip_display();
 
 			m_frameCounter++;
 
-			if (m_displayFrameRate) DisplayFrameRate();
+			al_clear_to_color(m_clearColor.GetAllegroColor());
 		}
 	}
 
@@ -109,6 +107,30 @@ void Game::DisplayFrameRate()
 		m_previousTime = m_currentTime;
 	}
 
-	std::cout << "FPS: " << m_actualFramesPerSecond << "\n";
+	int fps = (int)m_actualFramesPerSecond;
+	if (!m_pFrameCounterFont)
+	{
+		std::cout << "FPS: " << fps << "\n";
+	}
+	else
+	{
+		ALLEGRO_FONT* pFont = m_pFrameCounterFont->GetAllegroFont();
+		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 9, 9, 0, "%d", fps);
+		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 9, 11, 0, "%d", fps);
+		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 11, 0, "%d", fps);
+		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 9, 0, "%d", fps);
+		al_draw_textf(pFont, al_map_rgb(0, 255, 0), 10, 10, 0, "%d", fps);
+	}
 
+}
+
+void Game::Draw(SpriteBatch* pSpriteBatch)
+{
+	//al_draw_bitmap(m_pTexture->GetAllegroBitmap(), 32, 32, 0);
+	pSpriteBatch->Begin();
+	pSpriteBatch->Draw(m_pTexture, Vector2(40, 20));
+	pSpriteBatch->Draw(m_pTexture, Vector2(40, 300));
+	pSpriteBatch->End();
+
+	if (m_displayFrameRate) DisplayFrameRate();
 }

@@ -1,8 +1,6 @@
 #pragma once
 
-#include <allegro5/allegro.h>
-#include "KeyState.h"
-
+#include "_PCH.h"
 
 class InputState
 {

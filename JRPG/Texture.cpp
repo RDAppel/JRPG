@@ -1,21 +1,20 @@
-#include "Texture.h"
 
-#include <allegro5/allegro_image.h>
+#include "_PCH.h"
 
-bool Texture::s_alAddonInitialized = false;
+bool Texture::s_isAddonInitialized = false;
 
 
 Texture::Texture()
 {
-	if (!s_alAddonInitialized)
+	if (!s_isAddonInitialized)
 	{
-		s_alAddonInitialized = al_init_image_addon();
+		s_isAddonInitialized = al_init_image_addon();
 	}
 }
 
 Texture::~Texture()
 {
-	delete m_pBitmap;
+	al_destroy_bitmap(m_pBitmap);
 }
 
 bool Texture::Load(const std::string& path)

@@ -1,10 +1,6 @@
 #pragma once
 
-#include <map>
-#include <string>
-#include <vector>
-
-#include "Resource.h"
+#include "_PCH.h"
 
 class ResourceManager
 {

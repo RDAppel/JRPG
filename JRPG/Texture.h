@@ -1,15 +1,14 @@
 #pragma once
 
-#include <allegro5/allegro.h>
+#include "_PCH.h"
 
-#include "Resource.h"
 
 class Texture : public Resource
 {
 
 private:
 
-	static bool s_alAddonInitialized;
+	static bool s_isAddonInitialized;
 
 	ALLEGRO_BITMAP* m_pBitmap = nullptr;
 
@@ -26,7 +25,7 @@ public:
 	virtual int GetWidth() const { return m_width; }
 	virtual int GetHeight() const { return m_height; }
 
-	virtual ALLEGRO_BITMAP* GetAllegroBitmap() { return m_pBitmap; }
+	virtual ALLEGRO_BITMAP* GetAllegroBitmap() const { return m_pBitmap; }
 
 };
 

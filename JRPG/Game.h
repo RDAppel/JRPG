@@ -1,13 +1,6 @@
 #pragma once
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
-
-#include <iostream>
-
-#include "InputState.h"
-#include "ResourceManager.h"
-
+#include "_PCH.h"
 
 class Game
 {
@@ -29,9 +22,17 @@ private:
 
 	bool m_displayFrameRate = true;
 
-	InputState *m_pInputState = nullptr;
+	Font* m_pFrameCounterFont = nullptr;
+
+	InputState* m_pInputState = nullptr;
+
+	SpriteBatch* m_pSpriteBatch = nullptr;
 
 	ResourceManager m_resourceManager;
+
+	Color m_clearColor = Color::BLACK;
+
+	Texture* m_pTexture = nullptr;
 
 public:
 
@@ -47,5 +48,9 @@ public:
 	virtual void DisplayFrameRate();
 
 	virtual void SetTargetFramesPerSecond(const int frames) { m_targetFramesPerSecond = frames; }
+
+	virtual void Draw(SpriteBatch* pSpriteBatch);
+
+	virtual void SetClearColor(Color color) { m_clearColor = color; }
 
 };
