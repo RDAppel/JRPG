@@ -126,7 +126,6 @@ void Game::DisplayFrameRate()
 
 void Game::Draw(SpriteBatch* pSpriteBatch)
 {
-	//al_draw_bitmap(m_pTexture->GetAllegroBitmap(), 32, 32, 0);
 	pSpriteBatch->Begin();
 	pSpriteBatch->Draw(m_pTexture, Vector2(40, 20));
 	pSpriteBatch->Draw(m_pTexture, Vector2(40, 300));
