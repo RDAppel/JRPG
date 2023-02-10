@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "InputState.h"
+#include "ResourceManager.h"
 
 
 class Game
@@ -15,6 +16,7 @@ private:
 
 	static int s_screenWidth;
 	static int s_screenHeight;
+	static std::string s_windowTitle;
 
 	bool m_isInitialized = false;
 	float m_frameCounter = 0;
@@ -29,10 +31,14 @@ private:
 
 	InputState *m_pInputState = nullptr;
 
+	ResourceManager m_resourceManager;
+
 public:
 
 	Game();
 	virtual ~Game();
+
+	static void SetWindowTitle(const std::string title) { s_windowTitle = title; }
 
 	virtual void Update(InputState* pInput);
 
@@ -41,6 +47,5 @@ public:
 	virtual void DisplayFrameRate();
 
 	virtual void SetTargetFramesPerSecond(const int frames) { m_targetFramesPerSecond = frames; }
-
 
 };

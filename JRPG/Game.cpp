@@ -1,13 +1,16 @@
 
 #include "Game.h"
+#include "Texture.h"
 
 int Game::s_screenWidth = 1280;
 int Game::s_screenHeight = 768;
+std::string Game::s_windowTitle = "RPG";
 
 
 Game::Game()
 {
 	m_isInitialized = al_init();
+	m_resourceManager.SetContentPath("..\\JRPG\\Content\\");
 }
 
 Game::~Game()
@@ -17,7 +20,6 @@ Game::~Game()
 
 void Game::Update(InputState* pInput)
 {
-
 }
 
 int Game::Run()
@@ -36,14 +38,16 @@ int Game::Run()
 		return -1;
 	}
 
+	al_set_window_title(pDisplay, s_windowTitle.c_str());
+
 	ALLEGRO_EVENT_QUEUE* pEventQueue = al_create_event_queue();
 	ALLEGRO_TIMER* pTimer = al_create_timer(1 / m_targetFramesPerSecond);
 
 
-	bool isImageAddonInitialized = al_init_image_addon();
+	//bool isImageAddonInitialized = al_init_image_addon();
+	//ALLEGRO_BITMAP* pChestImage = al_load_bitmap("..\\JRPG\\Content\\Textures\\Spritesheets\\Chest.png");
 
-
-	ALLEGRO_BITMAP* pChestImage = al_load_bitmap("..\\JRPG\\Content\\Textures\\Spritesheets\\Chest.png");
+	Texture* pTexture = m_resourceManager.Load<Texture>("Textures\\Spritesheets\\Chest.png");
 
 	ALLEGRO_EVENT alEvent;
 	al_start_timer(pTimer);
@@ -80,7 +84,7 @@ int Game::Run()
 
 			al_clear_to_color(al_map_rgb(0, 0, 255));
 
-			al_draw_bitmap(pChestImage, 32, 32, 0);
+			al_draw_bitmap(pTexture->GetAllegroBitmap(), 32, 32, 0);
 
 			al_flip_display();
 

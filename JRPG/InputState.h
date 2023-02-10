@@ -11,8 +11,8 @@ class InputState
 
 private:
 
-	ALLEGRO_KEYBOARD_STATE m_currentKeyboardState;
-	ALLEGRO_KEYBOARD_STATE m_previousKeyboardState;
+	ALLEGRO_KEYBOARD_STATE m_currentKeyboardState = ALLEGRO_KEYBOARD_STATE{};
+	ALLEGRO_KEYBOARD_STATE m_previousKeyboardState = ALLEGRO_KEYBOARD_STATE{};
 
 	void Update()
 	{
