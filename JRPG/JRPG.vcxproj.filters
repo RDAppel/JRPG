@@ -9,43 +9,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Resourceses">
-      <UniqueIdentifier>{3518d348-eec1-4bbb-94f8-fcf7b30ffbfd}</UniqueIdentifier>
-      <Extensions>cpp;c;h;</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Math">
-      <UniqueIdentifier>{847034a1-163f-4ee3-9c3d-c4376a77bb54}</UniqueIdentifier>
+    <Filter Include="Source Files\TestScreens">
+      <UniqueIdentifier>{fcbd4c7e-ec8f-45ea-af3a-bbe279f82085}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files\Resourceses</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files\Resourceses</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource.cpp">
-      <Filter>Source Files\Resourceses</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteBatch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="_PCH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Source Files\Resourceses</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Color.cpp">
+    <ClCompile Include="JRPG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,36 +28,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputState.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyState.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Source Files\Resourceses</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Source Files\Resourceses</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Source Files\Resourceses</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h" />
-    <ClInclude Include="SpriteBatch.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="_PCH.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>Source Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Color.h">
+    <ClInclude Include="JRPG.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenA.h">
+      <Filter>Source Files\TestScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenB.h">
+      <Filter>Source Files\TestScreens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

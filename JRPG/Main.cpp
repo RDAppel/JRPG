@@ -1,4 +1,4 @@
 
 #include "_PCH.h"
 
-int main() { return (new Game())->Run(); }
+int main() { return (new JRPG())->Run(); }

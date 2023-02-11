@@ -89,5 +89,7 @@ public:
 		const Vector2 origin = Vector2::ZERO, const Vector2 scale = Vector2::ONE, const float rotation = 0,
 		const float drawDepth = 0);
 
-};
+	virtual void Draw(const Font* pFont, std::string* pText, const Vector2 position,
+		const Color color = Color::WHITE, const float drawDepth = 0);
 
+};

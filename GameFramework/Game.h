@@ -28,7 +28,11 @@ private:
 
 	SpriteBatch* m_pSpriteBatch = nullptr;
 
+	ScreenManager *m_pScreenManager = nullptr;
+
 	ResourceManager m_resourceManager;
+
+	GameTime m_gameTime;
 
 	Color m_clearColor = Color::BLACK;
 
@@ -52,5 +56,9 @@ public:
 	virtual void Draw(SpriteBatch* pSpriteBatch);
 
 	virtual void SetClearColor(Color color) { m_clearColor = color; }
+
+	virtual ResourceManager* GetResourceManager() { return &m_resourceManager; }
+
+	virtual ScreenManager* GetScreenManager() { return m_pScreenManager; }
 
 };

@@ -40,6 +40,38 @@ void SpriteBatch::End()
 			else DrawFont(*m_it);
 		}
 	}
+
+	m_drawables.clear();
+}
+
+void SpriteBatch::Draw(const Font* pFont, std::string* pText, const Vector2 position,
+	const Color color, const float drawDepth)
+{
+	assert(m_isStarted && "You must call Begin() before drawing.");
+
+	Drawable* pDrawable;
+
+	if (m_it != m_inactiveDrawables.end())
+	{
+		pDrawable = *m_it;
+		m_it++;
+	}
+	else
+	{
+		pDrawable = new Drawable();
+		m_inactiveDrawables.push_back(pDrawable);
+		m_it = m_inactiveDrawables.end();
+	}
+
+	pDrawable->isBitmap = false;
+	pDrawable->Union.pFont = pFont->GetAllegroFont();
+	pDrawable->Union.pText = pText;
+	pDrawable->x = position.X;
+	pDrawable->y = position.Y;
+	pDrawable->color = color.GetAllegroColor();
+
+	if (m_sortMode == SpriteSortMode::IMMEDIATE) DrawFont(pDrawable);
+	else m_drawables.push_back(pDrawable);
 }
 
 void SpriteBatch::Draw(const Texture* pTexture, const Vector2 position, const Color color,
@@ -96,5 +128,11 @@ void SpriteBatch::DrawBitmap(Drawable* pDrawable)
 
 void SpriteBatch::DrawFont(Drawable* pDrawable)
 {
-	//al_draw_text
+	al_draw_text(
+		pDrawable->Union.pFont,
+		pDrawable->color,
+		pDrawable->x,
+		pDrawable->y,
+		0,
+		pDrawable->Union.pText->c_str());
 }

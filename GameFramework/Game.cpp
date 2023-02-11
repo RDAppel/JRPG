@@ -11,6 +11,7 @@ Game::Game()
 	m_isInitialized = al_init();
 	m_resourceManager.SetContentPath("..\\JRPG\\Content\\");
 
+	m_pScreenManager = new ScreenManager(this);
 	m_pSpriteBatch = new SpriteBatch;
 }
 
@@ -22,6 +23,8 @@ Game::~Game()
 
 void Game::Update(InputState* pInput)
 {
+	m_pScreenManager->HandleInput(pInput);
+	m_pScreenManager->Update(&m_gameTime);
 }
 
 int Game::Run()
@@ -44,8 +47,6 @@ int Game::Run()
 
 	ALLEGRO_EVENT_QUEUE* pEventQueue = al_create_event_queue();
 	ALLEGRO_TIMER* pTimer = al_create_timer(1 / m_targetFramesPerSecond);
-
-	m_pTexture = m_resourceManager.Load<Texture>("Textures\\Spritesheets\\Chest.png");
 
 	m_pFrameCounterFont = m_resourceManager.Load<Font>("Fonts\\Iceland.ttf");
 
@@ -73,6 +74,7 @@ int Game::Run()
 		}
 		else if (alEvent.type == ALLEGRO_EVENT_TIMER)
 		{
+			m_gameTime.Update();
 			m_pInputState->Update();
 			Update(m_pInputState);
 			redraw = true;
@@ -126,10 +128,7 @@ void Game::DisplayFrameRate()
 
 void Game::Draw(SpriteBatch* pSpriteBatch)
 {
-	pSpriteBatch->Begin();
-	pSpriteBatch->Draw(m_pTexture, Vector2(40, 20));
-	pSpriteBatch->Draw(m_pTexture, Vector2(40, 300));
-	pSpriteBatch->End();
+	m_pScreenManager->Draw(pSpriteBatch);
 
 	if (m_displayFrameRate) DisplayFrameRate();
 }

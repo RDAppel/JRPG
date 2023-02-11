@@ -29,33 +29,33 @@ public:
 	}
 
 
-	bool IsKeyDown(Key key)
+	bool IsKeyDown(Key key) const
 	{
 		return al_key_down(&m_currentKeyboardState, (int)key);
 	}
 
-	bool IsKeyUp(Key key)
+	bool IsKeyUp(Key key) const
 	{
 		return !IsKeyDown(key);
 	}
 
-	bool WasKeyDown(Key key)
+	bool WasKeyDown(Key key) const
 	{
 		return al_key_down(&m_previousKeyboardState, (int)key);
 	}
 
-	bool WasKeyUp(Key key)
+	bool WasKeyUp(Key key) const
 	{
 		return !WasKeyDown(key);
 	}
 
 
-	bool IsNewKeyPress(Key key)
+	bool IsNewKeyPress(Key key) const
 	{
 		return IsKeyDown(key) && WasKeyUp(key);
 	}
 
-	bool IsNewKeyRelease(Key key)
+	bool IsNewKeyRelease(Key key) const
 	{
 		return IsKeyUp(key) && WasKeyDown(key);
 	}
