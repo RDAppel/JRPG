@@ -46,10 +46,16 @@ private:
 
 			struct // font
 			{
+				bool isTextStored;
 				ALLEGRO_FONT* pFont;
-				std::string* pText;
+
+				union
+				{
+					std::string* pText;
+					unsigned int index;
+				} TextSource;
 			};
-		} Union = { };
+		} Type = { };
 
 		bool operator<(const Drawable& other) const { return depth < other.depth; }
 	};
@@ -75,6 +81,8 @@ private:
 	std::vector<Drawable*> m_inactiveDrawables;
 	std::vector<Drawable*>::iterator m_it;
 
+	std::vector<std::string> m_textCopies;
+
 	void DrawBitmap(Drawable*);
 	void DrawFont(Drawable*);
 	
@@ -88,6 +96,9 @@ public:
 	virtual void Draw(const Texture* pTexture, const Vector2 position, const Color color = Color::WHITE,
 		const Vector2 origin = Vector2::ZERO, const Vector2 scale = Vector2::ONE, const float rotation = 0,
 		const float drawDepth = 0);
+
+	virtual void Draw(const Font* pFont, std::string pText, const Vector2 position,
+		const Color color = Color::WHITE, const float drawDepth = 0);
 
 	virtual void Draw(const Font* pFont, std::string* pText, const Vector2 position,
 		const Color color = Color::WHITE, const float drawDepth = 0);

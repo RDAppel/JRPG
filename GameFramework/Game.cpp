@@ -13,6 +13,8 @@ Game::Game()
 
 	m_pScreenManager = new ScreenManager(this);
 	m_pSpriteBatch = new SpriteBatch;
+
+	srand(time(0));
 }
 
 Game::~Game()

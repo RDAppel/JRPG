@@ -7,10 +7,12 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <map>
 #include <unordered_map>
 #include <limits>
 #include <algorithm>
+#include <functional>
 
 /* Allegro */
 #include <allegro5/allegro.h>
@@ -21,13 +23,14 @@
 #include <allegro5/allegro_acodec.h>
 
 
+/* Math */
+#include "Math.h"
+#include "Color.h"
+#include "Vector2.h"
+
 /* Input */
 #include "KeyState.h"
 #include "InputState.h"
-
-/* Math */
-#include "Color.h"
-#include "Vector2.h"
 
 /* Resources */
 #include "Resource.h"

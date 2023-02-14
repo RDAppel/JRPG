@@ -1,12 +1,15 @@
 #include "_PCH.h"
 
 
-void Screen::LoadContent(ResourceManager* pResourceManager)
+void Screen::Update(const GameTime* pGameTime)
 {
+	if (m_isExiting)
+	{
+		if (m_onExitCallback != nullptr)
+		{
+			m_onExitCallback();
+		}
 
-}
-
-void Screen::UnloadContent()
-{
-
+		m_shouldBeRemoved = true;
+	}
 }

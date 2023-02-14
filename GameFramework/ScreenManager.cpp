@@ -71,9 +71,13 @@ void ScreenManager::Update(const GameTime *pGameTime)
 
 			m_screens.erase(std::remove(m_screens.begin(), m_screens.end(), pScreen), m_screens.end());
 
+			if (pScreen->m_onRemoveCallback) pScreen->m_onRemoveCallback();
+
 			delete pScreen;
 		}
 	}
+
+	m_screensToRemove.clear();
 }
 
 void ScreenManager::Draw(SpriteBatch* pSpriteBatch)

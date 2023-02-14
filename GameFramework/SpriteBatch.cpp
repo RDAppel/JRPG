@@ -44,6 +44,43 @@ void SpriteBatch::End()
 	m_drawables.clear();
 }
 
+
+void SpriteBatch::Draw(const Font* pFont, std::string pText, const Vector2 position,
+	const Color color, const float drawDepth)
+{
+	assert(m_isStarted && "You must call Begin() before drawing.");
+
+	Drawable* pDrawable;
+
+	if (m_it != m_inactiveDrawables.end())
+	{
+		pDrawable = *m_it;
+		m_it++;
+	}
+	else
+	{
+		pDrawable = new Drawable();
+		m_inactiveDrawables.push_back(pDrawable);
+		m_it = m_inactiveDrawables.end();
+	}
+
+	unsigned int index = (int)m_textCopies.size();
+	m_textCopies.push_back(pText);
+
+	pDrawable->isBitmap = false;
+	pDrawable->Type.isTextStored = true;
+	pDrawable->Type.pFont = pFont->GetAllegroFont();
+	pDrawable->Type.TextSource.index = index;
+	pDrawable->x = position.X;
+	pDrawable->y = position.Y;
+	pDrawable->color = color.GetAllegroColor();
+
+	if (m_sortMode == SpriteSortMode::IMMEDIATE) DrawFont(pDrawable);
+	else m_drawables.push_back(pDrawable);
+
+}
+
+
 void SpriteBatch::Draw(const Font* pFont, std::string* pText, const Vector2 position,
 	const Color color, const float drawDepth)
 {
@@ -64,8 +101,9 @@ void SpriteBatch::Draw(const Font* pFont, std::string* pText, const Vector2 posi
 	}
 
 	pDrawable->isBitmap = false;
-	pDrawable->Union.pFont = pFont->GetAllegroFont();
-	pDrawable->Union.pText = pText;
+	pDrawable->Type.isTextStored = false;
+	pDrawable->Type.pFont = pFont->GetAllegroFont();
+	pDrawable->Type.TextSource.pText = pText;
 	pDrawable->x = position.X;
 	pDrawable->y = position.Y;
 	pDrawable->color = color.GetAllegroColor();
@@ -94,19 +132,19 @@ void SpriteBatch::Draw(const Texture* pTexture, const Vector2 position, const Co
 	}
 
 	pDrawable->isBitmap = true;
-	pDrawable->Union.pBitmap = pTexture->GetAllegroBitmap();
+	pDrawable->Type.pBitmap = pTexture->GetAllegroBitmap();
 	pDrawable->x = position.X;
 	pDrawable->y = position.Y;
 	pDrawable->color = color.GetAllegroColor();
-	pDrawable->Union.sx = 0;
-	pDrawable->Union.sy = 0;
-	pDrawable->Union.sw = pTexture->GetWidth();
-	pDrawable->Union.sh = pTexture->GetHeight();
-	pDrawable->Union.cx = origin.X;
-	pDrawable->Union.cy = origin.Y;
-	pDrawable->Union.scx = scale.X;
-	pDrawable->Union.scy = scale.Y;
-	pDrawable->Union.rotation = rotation;
+	pDrawable->Type.sx = 0;
+	pDrawable->Type.sy = 0;
+	pDrawable->Type.sw = pTexture->GetWidth();
+	pDrawable->Type.sh = pTexture->GetHeight();
+	pDrawable->Type.cx = origin.X;
+	pDrawable->Type.cy = origin.Y;
+	pDrawable->Type.scx = scale.X;
+	pDrawable->Type.scy = scale.Y;
+	pDrawable->Type.rotation = rotation;
 	pDrawable->depth = drawDepth;
 
 	if (m_sortMode == SpriteSortMode::IMMEDIATE) DrawBitmap(pDrawable);
@@ -116,23 +154,27 @@ void SpriteBatch::Draw(const Texture* pTexture, const Vector2 position, const Co
 void SpriteBatch::DrawBitmap(Drawable* pDrawable)
 {
 	al_draw_tinted_scaled_rotated_bitmap_region(
-		pDrawable->Union.pBitmap,
-		pDrawable->Union.sx, pDrawable->Union.sy,
-		pDrawable->Union.sw, pDrawable->Union.sh,
+		pDrawable->Type.pBitmap,
+		pDrawable->Type.sx, pDrawable->Type.sy,
+		pDrawable->Type.sw, pDrawable->Type.sh,
 		pDrawable->color,
-		pDrawable->Union.cx, pDrawable->Union.cy,
+		pDrawable->Type.cx, pDrawable->Type.cy,
 		pDrawable->x, pDrawable->y,
-		pDrawable->Union.scx, pDrawable->Union.scy,
-		pDrawable->Union.rotation, 0);
+		pDrawable->Type.scx, pDrawable->Type.scy,
+		pDrawable->Type.rotation, 0);
 }
 
 void SpriteBatch::DrawFont(Drawable* pDrawable)
 {
+	bool stored = pDrawable->Type.isTextStored;
+	const char* text = stored
+		? m_textCopies[pDrawable->Type.TextSource.index].c_str()
+		: pDrawable->Type.TextSource.pText->c_str();
+
 	al_draw_text(
-		pDrawable->Union.pFont,
+		pDrawable->Type.pFont,
 		pDrawable->color,
 		pDrawable->x,
 		pDrawable->y,
-		0,
-		pDrawable->Union.pText->c_str());
+		0, text);
 }
