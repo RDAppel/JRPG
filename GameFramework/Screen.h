@@ -3,8 +3,8 @@
 
 #include "_PCH.h"
 
-typedef std::function<void()> OnScreenExitCallback;
-typedef std::function<void()> OnScreenRemoveCallback;
+typedef std::function<void()> OnScreenExit;
+typedef std::function<void()> OnScreenRemove;
 
 class Screen
 {
@@ -17,20 +17,20 @@ private:
 
 	ScreenManager* m_pScreenManager = nullptr;
 
-	OnScreenExitCallback m_onExitCallback;
-	OnScreenRemoveCallback m_onRemoveCallback;
+	OnScreenExit m_onExit;
+	OnScreenRemove m_onRemove;
 
 public:
 
-	virtual void LoadContent(ResourceManager* pResourceManager) {}
+	virtual void LoadContent(ResourceManager& resourceManager) = 0;
 
 	virtual void UnloadContent() {}
 
-	virtual void HandleInput(const InputState* pInput) {}
+	virtual void HandleInput(const InputState& input) {}
 
-	virtual void Update(const GameTime* pGameTime);
+	virtual void Update(const GameTime& gameTime);
 
-	virtual void Draw(SpriteBatch* pSpriteBatch) = 0;
+	virtual void Draw(SpriteBatch& spriteBatch) = 0;
 
 	virtual bool ShouldHandleInputBelow() { return false; }
 
@@ -40,11 +40,11 @@ public:
 
 	virtual bool ShouldBeRemoved() { return m_shouldBeRemoved; }
 
-	virtual ScreenManager* GetScreenManager() { return m_pScreenManager; }
+	virtual ScreenManager& GetScreenManager() { return *m_pScreenManager; }
 
-	virtual void SetOnExitCallback(OnScreenExitCallback callback) { m_onExitCallback = callback; }
+	virtual void SetOnExit(OnScreenExit onExit) { m_onExit = onExit; }
 
-	virtual void SetOnRemoveCallback(OnScreenRemoveCallback callback) { m_onRemoveCallback = callback; }
+	virtual void SetOnRemove(OnScreenRemove onRemove) { m_onRemove = onRemove; }
 
 	virtual void Exit() { m_isExiting = true; }
 

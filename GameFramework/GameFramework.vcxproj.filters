@@ -54,11 +54,14 @@
     <ClCompile Include="ScreenManager.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="GameTime.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Math.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="InputState.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,11 +104,14 @@
     <ClInclude Include="ScreenManager.h">
       <Filter>Source Files\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="GameTime.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="KeySequence.h">
+      <Filter>Source Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Math.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Source Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

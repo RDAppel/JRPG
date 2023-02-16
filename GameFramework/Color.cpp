@@ -24,7 +24,7 @@ const Color Color::AQUA = Color(0, 1, 1);
 const Color Color::MAGENTA = Color(1, 0, 1);
 
 // misc.
-const Color Color::TRANSPARENT = Color(0, 0, 0, 0);
+//const Color Color::TRANSPARENT = Color(0, 0, 0, 0);
 
 const Color Color::ALICE_BLUE = Color(0.94f, 0.97f, 1.0f);
 const Color Color::ANTIQUE_WHITE = Color(0.98f, 0.92f, 0.84f);

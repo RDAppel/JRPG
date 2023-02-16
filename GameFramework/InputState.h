@@ -12,51 +12,31 @@ private:
 	ALLEGRO_KEYBOARD_STATE m_currentKeyboardState = ALLEGRO_KEYBOARD_STATE{};
 	ALLEGRO_KEYBOARD_STATE m_previousKeyboardState = ALLEGRO_KEYBOARD_STATE{};
 
-	void Update()
-	{
-		if (al_is_keyboard_installed())
-		{
-			m_previousKeyboardState = m_currentKeyboardState;
-			al_get_keyboard_state(&m_currentKeyboardState);
-		}
-	}
+	bool m_anyNewPressedKeys = false;
+	bool m_anyNewReleasedKeys = false;
+
+	bool m_pressedKeys[(uint8_t)Key::MAX] = { false };
+	bool m_releasedKeys[(uint8_t)Key::MAX] = { false };
+
+	void Update();
 
 public:
 
-	InputState()
-	{
-		al_install_keyboard();
-	}
+	InputState() { al_install_keyboard(); }
 
+	bool IsKeyDown(Key key) const;
 
-	bool IsKeyDown(Key key) const
-	{
-		return al_key_down(&m_currentKeyboardState, (int)key);
-	}
+	bool IsKeyUp(Key key) const;
 
-	bool IsKeyUp(Key key) const
-	{
-		return !IsKeyDown(key);
-	}
+	bool WasKeyDown(Key key) const;
 
-	bool WasKeyDown(Key key) const
-	{
-		return al_key_down(&m_previousKeyboardState, (int)key);
-	}
+	bool WasKeyUp(Key key) const;
 
-	bool WasKeyUp(Key key) const
-	{
-		return !WasKeyDown(key);
-	}
+	bool IsNewKeyPress(Key key) const;
 
+	bool IsNewKeyRelease(Key key) const;
 
-	bool IsNewKeyPress(Key key) const
-	{
-		return IsKeyDown(key) && WasKeyUp(key);
-	}
+	bool IsAnyNewKeyPressed() const { return m_anyNewPressedKeys; }
 
-	bool IsNewKeyRelease(Key key) const
-	{
-		return IsKeyUp(key) && WasKeyDown(key);
-	}
+	bool IsAnyNewKeyReleased() const { return m_anyNewReleasedKeys; }
 };

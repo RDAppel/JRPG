@@ -139,6 +139,7 @@
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="InputState.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="InputState.h" />
+    <ClInclude Include="KeySequence.h" />
     <ClInclude Include="KeyState.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Resource.h" />

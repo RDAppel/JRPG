@@ -12,7 +12,7 @@ public:
 	{
 		SetClearColor(Color::REBECCA_PURPLE);
 
-		GetScreenManager()->AddScreen(new ScreenA);
+		GetScreenManager().AddScreen(*(new ScreenA));
 	}
 
 };

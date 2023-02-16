@@ -2,16 +2,16 @@
 #include "_PCH.h"
 
 
-void ScreenManager::AddScreen(Screen* pScreen)
+void ScreenManager::AddScreen(Screen& screen)
 {
-	pScreen->m_pScreenManager = this;
+	screen.m_pScreenManager = this;
 
-	pScreen->LoadContent(m_pGame->GetResourceManager());
+	screen.LoadContent(m_pGame->GetResourceManager());
 
-	m_screensToAdd.push_back(pScreen);
+	m_screensToAdd.push_back(&screen);
 }
 
-void ScreenManager::HandleInput(const InputState* pInput)
+void ScreenManager::HandleInput(const InputState& input)
 {
 	Screen* pScreen;
 
@@ -23,12 +23,12 @@ void ScreenManager::HandleInput(const InputState* pInput)
 		if (pScreen->ShouldBeRemoved()) continue;
 		if (!handleInput) break;
 
-		pScreen->HandleInput(pInput);
+		pScreen->HandleInput(input);
 		if (!pScreen->ShouldHandleInputBelow()) break;
 	}
 }
 
-void ScreenManager::Update(const GameTime *pGameTime)
+void ScreenManager::Update(const GameTime& gameTime)
 {
 	Screen* pScreen;
 
@@ -54,7 +54,7 @@ void ScreenManager::Update(const GameTime *pGameTime)
 			}
 			else if (update)
 			{
-				pScreen->Update(pGameTime);
+				pScreen->Update(gameTime);
 				update = pScreen->ShouldUpdateBelow();
 			}
 
@@ -71,7 +71,7 @@ void ScreenManager::Update(const GameTime *pGameTime)
 
 			m_screens.erase(std::remove(m_screens.begin(), m_screens.end(), pScreen), m_screens.end());
 
-			if (pScreen->m_onRemoveCallback) pScreen->m_onRemoveCallback();
+			if (pScreen->m_onRemove) pScreen->m_onRemove();
 
 			delete pScreen;
 		}
@@ -80,7 +80,7 @@ void ScreenManager::Update(const GameTime *pGameTime)
 	m_screensToRemove.clear();
 }
 
-void ScreenManager::Draw(SpriteBatch* pSpriteBatch)
+void ScreenManager::Draw(SpriteBatch& spriteBatch)
 {
 	Screen* pScreen;
 
@@ -96,7 +96,7 @@ void ScreenManager::Draw(SpriteBatch* pSpriteBatch)
 	for (m_rit = m_screensToDraw.rbegin(); m_rit != m_screensToDraw.rend(); ++m_rit)
 	{
 		pScreen = *m_rit;
-		pScreen->Draw(pSpriteBatch);
+		pScreen->Draw(spriteBatch);
 	}
 
 	m_screensToDraw.clear();

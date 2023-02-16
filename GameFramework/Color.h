@@ -21,7 +21,7 @@ public:
 	static const Color YELLOW;
 	static const Color PURPLE;
 
-	static const Color TRANSPARENT;
+	//static const Color TRANSPARENT;
 
 	static const Color ALICE_BLUE;
 	static const Color ANTIQUE_WHITE;

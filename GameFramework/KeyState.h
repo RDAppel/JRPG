@@ -1,8 +1,9 @@
 #pragma once
 
-enum class Key
+enum class Key : uint8_t
 {
-	A = 1,
+	NONE,
+	A,
 	B,
 	C,
 	D,
@@ -51,8 +52,57 @@ enum class Key
 	PAD_8,
 	PAD_9,
 
+	F1,
+	F2,
+	F3,
+	F4,
+	F5,
+	F6,
+	F7,
+	F8,
+	F9,
+	F10,
+	F11,
+	F12,
+
+	ESCAPE = 59,
+	TILDE = 60,
+	MINUS = 61,
+	EQUALS = 62,
+	BACKSPACE = 63,
+	TAB = 64,
+	OPENBRACE = 65,
+	CLOSEBRACE = 66,
+	ENTER = 67,
+	SEMICOLON = 68,
+	QUOTE = 69,
+	BACKSLASH = 70,
+	BACKSLASH2 = 71,
+	COMMA = 72,
+	FULLSTOP = 73,
+	SLASH = 74,
+	SPACE = 75,
+
+	INSERT = 76,
+	//DELETE = 77,
+	HOME = 78,
+	END = 79,
+	PGUP = 80,
+	PGDN = 81,
 	LEFT = 82,
-	RIGHT,
-	UP,
-	DOWN,
+	RIGHT = 83,
+	UP = 84,
+	DOWN = 85,
+
+	PAD_SLASH = 86,
+	PAD_ASTERISK = 87,
+	PAD_MINUS = 88,
+	PAD_PLUS = 89,
+	PAD_DELETE = 90,
+	PAD_ENTER = 91,
+
+	PRINTSCREEN = 92,
+	PAUSE = 93,
+
+	MAX
 };

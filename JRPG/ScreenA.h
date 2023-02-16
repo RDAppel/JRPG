@@ -7,42 +7,42 @@ class ScreenA : public Screen
 private:
 
 	Texture* m_pTexture = nullptr;
-	Vector2 m_position = Vector2(20, 20);
+	Vector2 m_position = Vector2(600, 400);
 
 public:
 
 	ScreenA()
 	{
-		SetOnExitCallback([]() { std::cout << "ScreenA exited" << std::endl; });
-		SetOnRemoveCallback([this]() { GetScreenManager()->AddScreen(new ScreenB); });
+		SetOnExit([]() { std::cout << "ScreenA exited" << std::endl; });
+		SetOnRemove([this]() { GetScreenManager().AddScreen(*(new ScreenB)); });
 	}
 
 
-	virtual void LoadContent(ResourceManager* pResourceManager)
+	virtual void LoadContent(ResourceManager& resourceManager)
 	{
-		m_pTexture = pResourceManager->Load<Texture>("Textures\\Spritesheets\\Chest.png");
+		m_pTexture = resourceManager.Load<Texture>("Textures\\Spritesheets\\Chest.png");
 	}
 
 	virtual void UnloadContent() {}
 
-	virtual void HandleInput(const InputState* pInput)
+	virtual void HandleInput(const InputState& input)
 	{
-		if (pInput->IsNewKeyPress(Key::A)) m_position.X = 20;
-		if (pInput->IsNewKeyPress(Key::X)) Exit();
+		if (input.IsNewKeyPress(Key::A)) m_position.X += 30;
+		if (input.IsNewKeyPress(Key::X)) Exit();
 	}
 
-	virtual void Update(const GameTime* pGameTime)
+	virtual void Update(const GameTime& gameTime)
 	{
-		m_position = Vector2::Lerp(Vector2::ZERO, Vector2::ONE * 200, pGameTime->GetTotalTime() / 5.0f);
-
-		Screen::Update(pGameTime);
+		double elapsed = gameTime.GetTimeElapsed();
+		m_position += Vector2::GetRandom() * 60 * elapsed;
+		Screen::Update(gameTime);
 	}
 
-	virtual void Draw(SpriteBatch* pSpriteBatch)
+	virtual void Draw(SpriteBatch& spriteBatch)
 	{
-		pSpriteBatch->Begin();
-		pSpriteBatch->Draw(m_pTexture, m_position);
-		pSpriteBatch->End();
+		spriteBatch.Begin();
+		spriteBatch.Draw(m_pTexture, m_position);
+		spriteBatch.End();
 	}
 };
 

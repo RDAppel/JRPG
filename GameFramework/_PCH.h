@@ -1,5 +1,7 @@
 #pragma once
 
+#define ALLEGRO_UNSTABLE
+
 #pragma message("Compiling Headers...")
 
 /* Standard */
@@ -21,7 +23,12 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_windows.h>
 
+
+
+/* Time */
+#include "GameTime.h"
 
 /* Math */
 #include "Math.h"
@@ -31,6 +38,7 @@
 /* Input */
 #include "KeyState.h"
 #include "InputState.h"
+#include "KeySequence.h"
 
 /* Resources */
 #include "Resource.h"
@@ -41,9 +49,6 @@
 
 /* Graphics */
 #include "SpriteBatch.h"
-
-/* Time */
-#include "GameTime.h"
 
 /* Screen Management */
 #include "Screen.h"

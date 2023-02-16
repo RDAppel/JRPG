@@ -22,13 +22,15 @@ private:
 
 	bool m_displayFrameRate = true;
 
+	ALLEGRO_DISPLAY* m_pDisplay = nullptr;
+
 	Font* m_pFrameCounterFont = nullptr;
 
 	InputState* m_pInputState = nullptr;
 
 	SpriteBatch* m_pSpriteBatch = nullptr;
 
-	ScreenManager *m_pScreenManager = nullptr;
+	ScreenManager* m_pScreenManager = nullptr;
 
 	ResourceManager m_resourceManager;
 
@@ -38,6 +40,9 @@ private:
 
 	Texture* m_pTexture = nullptr;
 
+	HWND m_pConsoleHandle = nullptr;
+	HWND m_pDisplayHandle = nullptr;
+
 public:
 
 	Game();
@@ -45,7 +50,7 @@ public:
 
 	static void SetWindowTitle(const std::string title) { s_windowTitle = title; }
 
-	virtual void Update(InputState* pInput);
+	virtual void Update();
 
 	virtual int Run();
 
@@ -53,12 +58,14 @@ public:
 
 	virtual void SetTargetFramesPerSecond(const int frames) { m_targetFramesPerSecond = frames; }
 
-	virtual void Draw(SpriteBatch* pSpriteBatch);
+	virtual void Draw(SpriteBatch& pSpriteBatch);
 
 	virtual void SetClearColor(Color color) { m_clearColor = color; }
 
-	virtual ResourceManager* GetResourceManager() { return &m_resourceManager; }
+	virtual ResourceManager& GetResourceManager() { return m_resourceManager; }
 
-	virtual ScreenManager* GetScreenManager() { return m_pScreenManager; }
+	virtual ScreenManager& GetScreenManager() { return *m_pScreenManager; }
+
+	virtual bool GetConsoleInput(std::string& text);
 
 };

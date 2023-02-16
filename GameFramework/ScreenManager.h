@@ -20,16 +20,18 @@ private:
 
 public: 
 
-	ScreenManager(Game* pGame) { m_pGame = pGame; }
-	virtual ~ScreenManager() {}
+	ScreenManager(Game& game) { m_pGame = &game; }
+	virtual ~ScreenManager() { }
 
-	virtual void AddScreen(Screen* pScreen);
+	virtual void AddScreen(Screen& screen);
 
-	virtual void HandleInput(const InputState* pInput);
+	virtual void HandleInput(const InputState& input);
 
-	virtual void Update(const GameTime* pGameTime);
+	virtual void Update(const GameTime& gameTime);
 
-	virtual void Draw(SpriteBatch* pSpriteBatch);
+	virtual void Draw(SpriteBatch& spriteBatch);
+
+	virtual Game& GetGame() { return *m_pGame; }
 
 
 };
