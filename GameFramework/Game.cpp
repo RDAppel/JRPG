@@ -1,9 +1,10 @@
 
 #include "_PCH.h"
 
-int Game::s_screenWidth = 1280;
-int Game::s_screenHeight = 768;
+int Game::s_screenWidth = 854;
+int Game::s_screenHeight = 480;
 std::string Game::s_windowTitle = "RPG";
+
 
 Game::Game()
 {
@@ -58,6 +59,7 @@ int Game::Run()
 		std::cout << "Couldn't create a display!";
 		return -1;
 	}
+
 
 	m_pDisplayHandle = al_get_win_window_handle(m_pDisplay);
 	al_set_window_title(m_pDisplay, s_windowTitle.c_str());

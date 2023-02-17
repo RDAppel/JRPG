@@ -51,10 +51,10 @@ public:
 
 		if (m_inputText != "")
 		{
-			spriteBatch.Draw(m_pFont, &m_inputText, Vector2(400, 400), Color::RED);
+			spriteBatch.Draw(m_pFont, &m_inputText, Vector2(400, 200), Color::RED);
 		}
 
-		spriteBatch.Draw(m_pFont, "what up?", Vector2(400, 450), Color::RED);
+		spriteBatch.Draw(m_pFont, "what up?", Vector2(400, 250), Color::RED);
 		spriteBatch.End();
 	}
 

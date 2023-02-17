@@ -44,6 +44,57 @@ void SpriteBatch::End()
 	m_drawables.clear();
 }
 
+void SpriteBatch::Draw(const Texture* pTexture, const Vector2 position, const Color color,
+	const Vector2 origin, const Vector2 scale, const float rotation, const float drawDepth)
+{
+	Region source(0, 0, pTexture->GetWidth(), pTexture->GetHeight());
+	Draw(pTexture, position, source, color, origin, scale, rotation, drawDepth);
+}
+
+void SpriteBatch::Draw(const Texture* pTexture, const Vector2 position, const Region& source,
+	const Color color, const Vector2 origin, const Vector2 scale, const float rotation, const float drawDepth)
+{
+	assert(m_isStarted && "You must call Begin() before drawing.");
+
+	Drawable* pDrawable;
+
+	if (m_it != m_inactiveDrawables.end())
+	{
+		pDrawable = *m_it;
+		m_it++;
+	}
+	else
+	{
+		pDrawable = new Drawable();
+		m_inactiveDrawables.push_back(pDrawable);
+		m_it = m_inactiveDrawables.end();
+	}
+
+	pDrawable->isBitmap = true;
+	pDrawable->Type.pBitmap = pTexture->GetAllegroBitmap();
+	pDrawable->x = position.X;
+	pDrawable->y = position.Y;
+	pDrawable->color = color.GetAllegroColor();
+	pDrawable->Type.sx = source.X;
+	pDrawable->Type.sy = source.Y;
+	pDrawable->Type.sw = source.Width;
+	pDrawable->Type.sh = source.Height;
+	pDrawable->Type.cx = origin.X;
+	pDrawable->Type.cy = origin.Y;
+	pDrawable->Type.scx = scale.X;
+	pDrawable->Type.scy = scale.Y;
+	pDrawable->Type.rotation = rotation;
+	pDrawable->depth = drawDepth;
+
+	if (m_sortMode == SpriteSortMode::IMMEDIATE) DrawBitmap(pDrawable);
+	else m_drawables.push_back(pDrawable);
+}
+
+void SpriteBatch::Draw(const Animation* pAnimation, const Vector2 position, const Color color, const Vector2 origin, const Vector2 scale, const float rotation, const float drawDepth)
+{
+	Draw(pAnimation->GetTexture(), position, pAnimation->GetCurrentFrame(), color, origin, scale, rotation, drawDepth);
+}
+
 
 void SpriteBatch::Draw(const Font* pFont, std::string pText, const Vector2 position,
 	const Color color, const float drawDepth)
@@ -109,45 +160,6 @@ void SpriteBatch::Draw(const Font* pFont, std::string* pText, const Vector2 posi
 	pDrawable->color = color.GetAllegroColor();
 
 	if (m_sortMode == SpriteSortMode::IMMEDIATE) DrawFont(pDrawable);
-	else m_drawables.push_back(pDrawable);
-}
-
-void SpriteBatch::Draw(const Texture* pTexture, const Vector2 position, const Color color,
-	const Vector2 origin, const Vector2 scale, const float rotation, const float drawDepth)
-{
-	assert(m_isStarted && "You must call Begin() before drawing.");
-
-	Drawable* pDrawable;
-
-	if (m_it != m_inactiveDrawables.end())
-	{
-		pDrawable = *m_it;
-		m_it++;
-	}
-	else
-	{
-		pDrawable = new Drawable();
-		m_inactiveDrawables.push_back(pDrawable);
-		m_it = m_inactiveDrawables.end();
-	}
-
-	pDrawable->isBitmap = true;
-	pDrawable->Type.pBitmap = pTexture->GetAllegroBitmap();
-	pDrawable->x = position.X;
-	pDrawable->y = position.Y;
-	pDrawable->color = color.GetAllegroColor();
-	pDrawable->Type.sx = 0;
-	pDrawable->Type.sy = 0;
-	pDrawable->Type.sw = pTexture->GetWidth();
-	pDrawable->Type.sh = pTexture->GetHeight();
-	pDrawable->Type.cx = origin.X;
-	pDrawable->Type.cy = origin.Y;
-	pDrawable->Type.scx = scale.X;
-	pDrawable->Type.scy = scale.Y;
-	pDrawable->Type.rotation = rotation;
-	pDrawable->depth = drawDepth;
-
-	if (m_sortMode == SpriteSortMode::IMMEDIATE) DrawBitmap(pDrawable);
 	else m_drawables.push_back(pDrawable);
 }
 

@@ -6,8 +6,10 @@ class ScreenA : public Screen
 
 private:
 
-	Texture* m_pTexture = nullptr;
-	Vector2 m_position = Vector2(600, 400);
+	Animation* m_pCurrent = nullptr;
+	Animation* m_pWalkRight = nullptr;
+	Animation* m_pWalkLeft = nullptr;
+	Vector2 m_position = Vector2(300, 200);
 
 public:
 
@@ -20,7 +22,20 @@ public:
 
 	virtual void LoadContent(ResourceManager& resourceManager)
 	{
-		m_pTexture = resourceManager.Load<Texture>("Textures\\Spritesheets\\Chest.png");
+		std::string path;
+		
+		path = "Textures\\Spritesheets\\Characters\\Character_0001.png";
+		Texture* pTexture = resourceManager.Load<Texture>(path);
+
+		path = "Animations\\Characters\\WalkRight.anim";
+		m_pWalkRight = resourceManager.Load<Animation>(path);
+		m_pWalkRight->SetTexture(pTexture);
+
+		path = "Animations\\Characters\\WalkLeft.anim";
+		m_pWalkLeft = resourceManager.Load<Animation>(path);
+		m_pWalkLeft->SetTexture(pTexture);
+
+		m_pCurrent = m_pWalkRight;
 	}
 
 	virtual void UnloadContent() {}
@@ -29,19 +44,35 @@ public:
 	{
 		if (input.IsNewKeyPress(Key::A)) m_position.X += 30;
 		if (input.IsNewKeyPress(Key::X)) Exit();
+
+		if (m_pCurrent) m_pCurrent->Pause();
+		if (input.IsKeyDown(Key::RIGHT))
+		{
+			m_pCurrent = m_pWalkRight;
+			m_pCurrent->Play();
+			m_position.X += 1;
+		}
+		if (input.IsKeyDown(Key::LEFT))
+		{
+			m_pCurrent = m_pWalkLeft;
+			m_pCurrent->Play();
+			m_position.X -= 1;
+		}
 	}
 
 	virtual void Update(const GameTime& gameTime)
 	{
-		double elapsed = gameTime.GetTimeElapsed();
-		m_position += Vector2::GetRandom() * 60 * elapsed;
+	/*	double elapsed = gameTime.GetTimeElapsed();
+		m_position += Vector2::GetRandom() * 60 * elapsed;*/
+
+		m_pCurrent->Update(gameTime);
 		Screen::Update(gameTime);
 	}
 
 	virtual void Draw(SpriteBatch& spriteBatch)
 	{
 		spriteBatch.Begin();
-		spriteBatch.Draw(m_pTexture, m_position);
+		spriteBatch.Draw(m_pCurrent, m_position);
 		spriteBatch.End();
 	}
 };

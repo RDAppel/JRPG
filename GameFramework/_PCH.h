@@ -34,6 +34,7 @@
 #include "Math.h"
 #include "Color.h"
 #include "Vector2.h"
+#include "Region.h"
 
 /* Input */
 #include "KeyState.h"
@@ -44,6 +45,7 @@
 #include "Resource.h"
 #include "Font.h"
 #include "Texture.h"
+#include "Animation.h"
 
 #include "ResourceManager.h"
 
