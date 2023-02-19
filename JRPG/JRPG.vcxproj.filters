@@ -11,6 +11,14 @@
     </Filter>
     <Filter Include="Source Files\TestScreens">
       <UniqueIdentifier>{fcbd4c7e-ec8f-45ea-af3a-bbe279f82085}</UniqueIdentifier>
+      <Extensions>cpp;c;h;</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Characters">
+      <UniqueIdentifier>{78aa9b95-4e57-4afc-9a21-13791b1dbb04}</UniqueIdentifier>
+      <Extensions>cpp;c;h;</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Enumerations">
+      <UniqueIdentifier>{34361cca-5203-428c-acc2-482188ecb39b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -22,6 +30,12 @@
     </ClCompile>
     <ClCompile Include="JRPG.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="MapComponent.cpp">
+      <Filter>Source Files\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +53,18 @@
     </ClInclude>
     <ClInclude Include="ScreenB.h">
       <Filter>Source Files\TestScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Source Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Source Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="MapComponent.h">
+      <Filter>Source Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Direction.h">
+      <Filter>Source Files\Enumerations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

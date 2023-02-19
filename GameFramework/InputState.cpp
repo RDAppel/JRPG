@@ -1,7 +1,7 @@
 
 #include "_PCH.h"
 
-void InputState::Update()
+void InputState::Update(const GameTime& gameTime)
 {
 	if (al_is_keyboard_installed())
 	{
@@ -12,17 +12,23 @@ void InputState::Update()
 		m_anyNewReleasedKeys = false;
 		for (uint8_t i = 1; i < (uint8_t)Key::MAX; ++i)
 		{
-			bool pressed = IsNewKeyPress((Key)i);
-			m_anyNewPressedKeys |= pressed;
-			m_pressedKeys[i] = pressed;
-
 			bool released = IsNewKeyRelease((Key)i);
 			m_anyNewReleasedKeys |= released;
-			m_releasedKeys[i] = released;
+
+			bool pressed = IsNewKeyPress((Key)i);
+			m_anyNewPressedKeys |= pressed;
+
+			if (IsKeyUp((Key)i)) m_pressedKeyTimes[i] = 0;
+			else m_pressedKeyTimes[i] += gameTime.GetTimeElapsed();
 		}
 	}
 }
 
+void InputState::UpdateModifiers(uint8_t modifiers)
+{
+	m_previousModifiers = m_currentModifiers;
+	m_currentModifiers = modifiers;
+}
 
 bool InputState::IsKeyDown(Key key) const
 {

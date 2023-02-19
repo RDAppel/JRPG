@@ -1,8 +1,8 @@
 
 #include "_PCH.h"
 
-int Game::s_screenWidth = 854;
-int Game::s_screenHeight = 480;
+int Game::s_screenWidth = 1600;
+int Game::s_screenHeight = 900;
 std::string Game::s_windowTitle = "RPG";
 
 
@@ -39,7 +39,7 @@ void Game::Update()
 		m_previousTime = m_currentTime;
 	}
 
-	m_pInputState->Update();
+	m_pInputState->Update(m_gameTime);
 	m_pScreenManager->HandleInput(*m_pInputState);
 	m_pScreenManager->Update(m_gameTime);
 }
@@ -69,7 +69,7 @@ int Game::Run()
 
 	m_pFrameCounterFont = m_resourceManager.Load<Font>("Fonts\\Iceland.ttf");
 
-	ALLEGRO_EVENT alEvent;
+	ALLEGRO_EVENT event;
 	al_start_timer(pTimer);
 
 	al_register_event_source(pEventQueue, al_get_timer_event_source(pTimer));
@@ -85,18 +85,26 @@ int Game::Run()
 
 	while (m_isRunning)
 	{
-		al_wait_for_event(pEventQueue, &alEvent);
+		al_wait_for_event(pEventQueue, &event);
 
-		if (alEvent.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
 			m_isRunning = false;
 		}
-		else if (alEvent.type == ALLEGRO_EVENT_DISPLAY_SWITCH_OUT)
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN
+			|| event.type == ALLEGRO_EVENT_KEY_UP)
+		{
+			uint8_t mask =
+				ALLEGRO_KEYMOD_CTRL | ALLEGRO_KEYMOD_ALT | ALLEGRO_KEYMOD_SHIFT;
+			uint8_t modifiers = event.keyboard.modifiers & mask;
+			m_pInputState->UpdateModifiers(modifiers);
+		}
+		else if (event.type == ALLEGRO_EVENT_DISPLAY_SWITCH_OUT)
 		{
 			m_gameTime.m_currentTotalTime = al_get_time();
 			al_clear_keyboard_state(m_pDisplay);
 		}
-		else if (alEvent.type == ALLEGRO_EVENT_TIMER)
+		else if (event.type == ALLEGRO_EVENT_TIMER)
 		{
 			Update();
 			redraw = true;

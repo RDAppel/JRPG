@@ -1,5 +1,13 @@
 #pragma once
 
+enum class KeyModifier : uint8_t
+{
+	NONE,
+	SHIFT = 1,
+	CTRL = 2,
+	ALT = 4
+};
+
 enum class Key : uint8_t
 {
 	NONE,

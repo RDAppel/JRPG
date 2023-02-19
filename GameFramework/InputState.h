@@ -15,10 +15,14 @@ private:
 	bool m_anyNewPressedKeys = false;
 	bool m_anyNewReleasedKeys = false;
 
-	bool m_pressedKeys[(uint8_t)Key::MAX] = { false };
-	bool m_releasedKeys[(uint8_t)Key::MAX] = { false };
+	uint8_t m_currentModifiers = 0;
+	uint8_t m_previousModifiers = 0;
 
-	void Update();
+	double m_pressedKeyTimes[(uint8_t)Key::MAX] = { 0 };
+
+	void Update(const GameTime& gameTime);
+
+	void UpdateModifiers(uint8_t modifiers);
 
 public:
 
@@ -39,4 +43,8 @@ public:
 	bool IsAnyNewKeyPressed() const { return m_anyNewPressedKeys; }
 
 	bool IsAnyNewKeyReleased() const { return m_anyNewReleasedKeys; }
+
+	double GetPressedKeySeconds(Key key) const { return m_pressedKeyTimes[(uint8_t)key]; }
+
+	bool IsKeyModifierDown(KeyModifier modifier) const { return m_currentModifiers & (uint8_t)modifier; }
 };

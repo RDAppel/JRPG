@@ -9,7 +9,6 @@ private:
 
 	int m_currentIndex = 0;
 
-	double m_secondsPerFrame = 0.16;
 	double m_currentFrameTime = 0;
 
 	int m_loopCount = 0;
@@ -19,6 +18,7 @@ private:
 	Texture* m_pTexture = nullptr;
 
 	std::vector<Region> m_frames;
+	std::vector<double> m_frameTimes;
 
 public:
 

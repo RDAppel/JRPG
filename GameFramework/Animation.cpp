@@ -4,8 +4,8 @@
 Animation::Animation(const Animation& other)
 {
     m_frames = other.m_frames;
+    m_frameTimes = other.m_frameTimes;
     m_loopCount = other.m_loopCount;
-    m_secondsPerFrame = other.m_secondsPerFrame;
 }
 
 bool Animation::Load(const std::string& path)
@@ -34,7 +34,10 @@ bool Animation::Load(const std::string& path)
 
         if (currentStep == FrameTime)
         {
-            m_secondsPerFrame = stod(splitItems[0]);
+            for (size_t i = 0; i < splitItems.size(); ++i)
+            {
+				m_frameTimes.push_back(stod(splitItems[i]));
+			}
         }
         else if (currentStep == TileSize)
         {
@@ -59,6 +62,16 @@ bool Animation::Load(const std::string& path)
             }
 
             if (m_frames.size() == 0) return false;
+
+            // expand the frame times if necessary to match the number of frames
+            if (m_frameTimes.size() < m_frames.size())
+            {
+                double lastFrameTime = m_frameTimes[m_frameTimes.size() - 1];
+                for (size_t i = m_frameTimes.size(); i < m_frames.size(); ++i)
+                {
+					m_frameTimes.push_back(lastFrameTime);
+				}
+            }
         }
         else if (currentStep == LoopCount)
         {
@@ -78,6 +91,7 @@ void Animation::Stop()
 {
     Pause();
     m_currentIndex = 0;
+    m_currentFrameTime = 0;
 }
 
 void Animation::Update(const GameTime& gameTime)
@@ -85,14 +99,9 @@ void Animation::Update(const GameTime& gameTime)
     if (!m_isPlaying) return;
 
     m_currentFrameTime += gameTime.GetTimeElapsed();
-    if (m_currentFrameTime >= m_secondsPerFrame)
+    if (m_currentFrameTime >= m_frameTimes[m_currentIndex])
     {
-        m_currentIndex++;
-        m_currentFrameTime -= m_secondsPerFrame;
-
-        if (m_currentIndex >= m_frames.size())
-        {
-            m_currentIndex = 0;
-        }
+        m_currentFrameTime -= m_frameTimes[m_currentIndex];
+        m_currentIndex = (m_currentIndex + 1) % m_frames.size();
     }
 }
