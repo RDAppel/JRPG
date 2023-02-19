@@ -15,6 +15,11 @@ private:
 
 public:
 
+	GameTime() {}
+	GameTime(const GameTime&) = delete;
+
+	GameTime& operator=(const GameTime&) = delete;
+
 	double GetTotalTime() const { return m_currentTotalTime; }
 	double GetTimeElapsed() const { return m_elapsedTime; }
 

@@ -27,6 +27,9 @@ private:
 public:
 
 	InputState() { al_install_keyboard(); }
+	InputState(const InputState&) = delete;
+
+	InputState& operator=(const InputState&) = delete;
 
 	bool IsKeyDown(Key key) const;
 

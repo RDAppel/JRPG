@@ -141,6 +141,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="InputState.cpp" />
+    <ClCompile Include="KeySequence.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />

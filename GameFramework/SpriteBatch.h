@@ -19,7 +19,6 @@ enum class BlendState
 class SpriteBatch
 {
 
-
 private:
 
 	struct Drawable
@@ -87,6 +86,10 @@ private:
 	void DrawFont(Drawable*);
 	
 public:
+
+	SpriteBatch(const uint32_t defaultCount = 1000);
+	SpriteBatch(const SpriteBatch&) = delete;
+	~SpriteBatch();
 
 	virtual void Begin(const SpriteSortMode sortMode = SpriteSortMode::DEFERRED,
 		BlendState blendState = BlendState::ALPHA);

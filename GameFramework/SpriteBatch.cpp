@@ -1,6 +1,18 @@
 
 #include "_PCH.h"
 
+SpriteBatch::SpriteBatch(const uint32_t defaultCount)
+{
+	for (uint32_t i = 0; i < defaultCount; ++i)
+	{
+		m_inactiveDrawables.push_back(new Drawable());
+	}
+}
+
+SpriteBatch::~SpriteBatch()
+{
+	for (auto drawable : m_inactiveDrawables) delete drawable;
+}
 
 void SpriteBatch::Begin(const SpriteSortMode sortMode,
 	BlendState blendState)
@@ -40,6 +52,8 @@ void SpriteBatch::End()
 			else DrawFont(*m_it);
 		}
 	}
+
+	//std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
 
 	m_drawables.clear();
 }
