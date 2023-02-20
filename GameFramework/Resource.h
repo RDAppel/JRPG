@@ -11,9 +11,13 @@ private:
 
 	int m_id = -1;
 
+	ResourceManager* m_pResourceManager = nullptr;
+
 public:
 
 	virtual bool IsCloneable() { return false; }
+
+	virtual Resource* Clone() { return nullptr; }
 
 	virtual bool Load(const std::string& path) = 0;
 

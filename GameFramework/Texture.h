@@ -18,7 +18,10 @@ private:
 public:
 
 	Texture();
+	Texture(const Texture&) = delete;
 	virtual ~Texture();
+
+	Texture& operator=(const Texture&) = delete;
 
 	virtual bool Load(const std::string& path);
 

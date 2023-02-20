@@ -1,15 +1,15 @@
 
 #pragma once
 
+#include "_PCH.h"
+#include "ScreenB.h"
+#include "Character.h"
+#include "MapComponent.h"
+
 class ScreenA : public Screen
 {
 
 private:
-
-	//Animation* m_pCurrent = nullptr;
-	//Animation* m_pWalkRight = nullptr;
-	//Animation* m_pWalkLeft = nullptr;
-	//Vector2 m_position = Vector2(300, 200);
 
 	Character* m_pCharacter = nullptr;
 	MapComponent* m_pMC = nullptr;

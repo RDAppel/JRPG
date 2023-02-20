@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ScreenA.h"
+
 class JRPG : public Game
 {
 

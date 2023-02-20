@@ -15,7 +15,10 @@ private:
 public:
 
 	Font();
+	Font(const Font&) = delete;
 	virtual ~Font();
+
+	Font& operator=(const Font&) = delete;
 
 	virtual bool Load(const std::string& path);
 

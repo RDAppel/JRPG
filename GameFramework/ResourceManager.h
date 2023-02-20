@@ -27,15 +27,18 @@ public:
 	{
 		if (m_resources.find(path) != m_resources.end())
 		{
-			T* pResource = dynamic_cast<T*>(m_resources[path]);
+			Resource* pResource = m_resources[path];
 
 			if (pResource->IsCloneable())
 			{
-				// todo: call clone...
-					
+				pResource = pResource->Clone();
+				pResource->m_id = m_nextResourceId;
+				pResource->m_pResourceManager = this;
+				m_nextResourceId++;
+				m_clones.push_back(pResource);
 			}
 
-			return pResource;
+			return dynamic_cast<T*>(m_resources[path]);
 		}
 
 		T* pT = new T;
@@ -45,6 +48,7 @@ public:
 		{
 			if (cache) m_resources[path] = pT;
 			pT->m_id = m_nextResourceId;
+			pT->m_pResourceManager = this;
 			m_nextResourceId++;
 
 			return pT;

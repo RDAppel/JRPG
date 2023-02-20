@@ -1,12 +1,12 @@
 
 #include "_PCH.h"
 
-Animation::Animation(const Animation& other)
-{
-    m_frames = other.m_frames;
-    m_frameTimes = other.m_frameTimes;
-    m_loopCount = other.m_loopCount;
-}
+//Animation::Animation(const Animation& other)
+//{
+//    m_frames = other.m_frames;
+//    m_frameTimes = other.m_frameTimes;
+//    m_loopCount = other.m_loopCount;
+//}
 
 bool Animation::Load(const std::string& path)
 {
@@ -104,4 +104,13 @@ void Animation::Update(const GameTime& gameTime)
         m_currentFrameTime -= m_frameTimes[m_currentIndex];
         m_currentIndex = (m_currentIndex + 1) % m_frames.size();
     }
+}
+
+Animation* Animation::Clone()
+{
+	Animation* pClone = new Animation();
+	pClone->m_frames = m_frames;
+	pClone->m_frameTimes = m_frameTimes;
+	pClone->m_loopCount = m_loopCount;
+	return pClone;
 }

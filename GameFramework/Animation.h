@@ -23,10 +23,14 @@ private:
 public:
 
 	Animation() {}
-	Animation(const Animation& other);
+	Animation(const Animation&) = delete;
 	virtual ~Animation() {}
 
+	Animation& operator=(const Animation&) = delete;
+
 	virtual bool IsCloneable() { return true; }
+
+	virtual Animation* Clone();
 
 	virtual bool Load(const std::string& path);
 

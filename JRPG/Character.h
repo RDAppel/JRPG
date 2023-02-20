@@ -1,6 +1,7 @@
 #pragma once
 
 #include "_PCH.h"
+#include "Component.h"
 
 class Character : public Resource
 {
