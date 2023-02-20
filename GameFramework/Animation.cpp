@@ -1,12 +1,6 @@
 
 #include "_PCH.h"
 
-//Animation::Animation(const Animation& other)
-//{
-//    m_frames = other.m_frames;
-//    m_frameTimes = other.m_frameTimes;
-//    m_loopCount = other.m_loopCount;
-//}
 
 bool Animation::Load(const std::string& path)
 {
