@@ -143,6 +143,7 @@
     <ClCompile Include="InputState.cpp" />
     <ClCompile Include="KeySequence.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="SpriteBatch.cpp" />

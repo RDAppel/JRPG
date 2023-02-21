@@ -100,7 +100,7 @@ void Animation::Update(const GameTime& gameTime)
     }
 }
 
-Animation* Animation::Clone()
+Resource* Animation::Clone()
 {
 	Animation* pClone = new Animation();
 	pClone->m_frames = m_frames;

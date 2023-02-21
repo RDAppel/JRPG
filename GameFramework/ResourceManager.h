@@ -8,12 +8,11 @@ private:
 
 	int m_nextResourceId = 0;
 
-	std::map<std::string, Resource*> m_resources;
+	std::unordered_map<std::string, Resource*> m_resources;
 
 	std::string m_contentPath = "";
 
 	std::vector<Resource*> m_clones;
-
 
 public:
 
@@ -21,6 +20,27 @@ public:
 
 	void SetContentPath(const std::string& path) { m_contentPath = path; }
 
+	void RemoveResource(const int id)
+	{
+		std::unordered_map<std::string, Resource*>::iterator it = m_resources.begin();
+		for (; it != m_resources.end(); ++it)
+		{
+			if (it->second->m_id == id)
+			{
+				m_resources.erase(it);
+				return;
+			}
+		}
+
+		for (auto it = m_clones.begin(); it != m_clones.end(); ++it)
+		{
+			if ((*it)->m_id == id)
+			{
+				m_clones.erase(it);
+				return;
+			}
+		}
+	}
 
 	template <typename T>
 	T* Load(const std::string& path, const bool cache = true, const bool appendContentPath = true)
@@ -32,25 +52,24 @@ public:
 			if (pResource->IsCloneable())
 			{
 				pResource = pResource->Clone();
-				pResource->m_id = m_nextResourceId;
 				pResource->m_pResourceManager = this;
+				pResource->m_id = m_nextResourceId;
 				m_nextResourceId++;
 				m_clones.push_back(pResource);
 			}
 
-			return dynamic_cast<T*>(m_resources[path]);
+			return static_cast<T*>(m_resources[path]);
 		}
 
 		T* pT = new T;
+		pT->m_pResourceManager = this;
+		pT->m_id = m_nextResourceId;
+		m_nextResourceId++;
 
 		std::string fullPath = (appendContentPath ? m_contentPath : "").append(path);
 		if (pT->Load(fullPath))
 		{
 			if (cache) m_resources[path] = pT;
-			pT->m_id = m_nextResourceId;
-			pT->m_pResourceManager = this;
-			m_nextResourceId++;
-
 			return pT;
 		}
 

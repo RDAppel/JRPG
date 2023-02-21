@@ -3,19 +3,15 @@
 
 MapComponent::MapComponent()
 {
-	m_animationMaps[MovementState::IDLE] = &m_idleAnimations;
-	m_animationMaps[MovementState::WALKING] = &m_walkAnimations;
-	m_animationMaps[MovementState::RUNNING] = &m_runAnimations;
-
 	// todo: remove this
 	m_position = Vector2(100, 100);
 }
 
 MapComponent::~MapComponent()
 {
-	for (auto& pair : m_idleAnimations) delete pair.second;
-	for (auto& pair : m_walkAnimations) delete pair.second;
-	for (auto& pair : m_runAnimations) delete pair.second;
+	delete m_pIdleAnimations;
+	delete m_pWalkAnimations;
+	delete m_pRunAnimations;
 }
 
 void MapComponent::HandleInput(const InputState& input)
@@ -49,7 +45,11 @@ void MapComponent::HandleInput(const InputState& input)
 void MapComponent::Update(const GameTime& gameTime)
 {
 	m_pPreviousAnimation = m_pCurrentAnimation;
-	m_pCurrentAnimation = m_animationMaps[m_state]->at(m_currentDirection);
+	uint8_t index = (uint8_t)m_currentDirection;
+	if (m_state == MovementState::IDLE) m_pCurrentAnimation = (*m_pIdleAnimations)[index];
+	else if (m_state == MovementState::WALKING) m_pCurrentAnimation = (*m_pWalkAnimations)[index];
+	else if (m_state == MovementState::RUNNING) m_pCurrentAnimation = (*m_pRunAnimations)[index];
+
 	m_state = MovementState::IDLE;
 
 	if (m_pPreviousAnimation != m_pCurrentAnimation)

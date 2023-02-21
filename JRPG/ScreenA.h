@@ -25,11 +25,15 @@ public:
 
 	virtual void LoadContent(ResourceManager& resourceManager)
 	{
-		m_pCharacter = new Character;
-		m_pMC = new MapComponent;
+		m_pCharacter = resourceManager.Load<Character>("Characters\\Playable\\PC_0001.char");
+		Component *pComponent = m_pCharacter->GetComponent(Component::Type::MAP);
+		if (pComponent) m_pMC = static_cast<MapComponent*>(pComponent);
+		//m_pMC = new MapComponent;
 
-		std::string path;
-		Texture* pTexture;
+		//std::string path;
+		//Texture* pTexture;
+
+		/*
 		Animation* pAnimation;
 
 		path = "Textures\\Spritesheets\\Characters\\Character_0002.png";
@@ -38,7 +42,7 @@ public:
 		path = "Animations\\Characters\\Idle\\Up.anim";
 		pAnimation = resourceManager.Load<Animation>(path);
 		pAnimation->SetTexture(pTexture);
-		m_pMC->m_idleAnimations[Direction::UP] = pAnimation;
+		m_pMC->m_idleAnimations[(int)Direction::UP - 1] = pAnimation;
 
 		path = "Animations\\Characters\\Idle\\Down.anim";
 		pAnimation = resourceManager.Load<Animation>(path);
@@ -94,7 +98,7 @@ public:
 		pAnimation = resourceManager.Load<Animation>(path);
 		pAnimation->SetTexture(pTexture);
 		m_pMC->m_runAnimations[Direction::RIGHT] = pAnimation;
-
+		*/
 	}
 
 	virtual void UnloadContent() {}

@@ -30,7 +30,7 @@ public:
 
 	virtual bool IsCloneable() { return true; }
 
-	virtual Animation* Clone();
+	virtual Resource* Clone();
 
 	virtual bool Load(const std::string& path);
 

@@ -1,0 +1,11 @@
+#------------
+Map Component
+#------------
+Texture: Textures\SpriteSheets\Characters\Character_0002.png
+Idle: Animations\Characters\Idle\Set.anims
+Walk: Animations\Characters\Walk\Set.anims
+Run: Animations\Characters\Run\Set.anims
+
+#---------------
+Dialog Component
+#---------------

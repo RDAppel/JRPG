@@ -6,6 +6,7 @@ class Character;
 
 class Component
 {
+	friend class Character;
 
 private:
 
@@ -13,7 +14,7 @@ private:
 
 public:
 
-	enum class Type : uint8_t { MAP, DIALOG, BATTLE };
+	enum class Type : uint8_t { NONE, MAP, DIALOG, BATTLE };
 
 	virtual Type GetType() const = 0;
 

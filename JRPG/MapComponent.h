@@ -2,22 +2,27 @@
 
 #include "_PCH.h"
 
+#include "AnimationSet.h"
+
 class MapComponent : public Component
 {
 	enum class MovementState { IDLE, WALKING, RUNNING };
 
-	// todo: remove this when we can load properly
-	friend class ScreenA;
+	// todo: remove this when we can load properly ?? or make methods??
+	friend class Character;
 
 private:
 
 	const float TURN_THRESHOLD = 0.1f;
 
-	typedef std::unordered_map<Direction, Animation*> AnimationMap;
-	AnimationMap m_idleAnimations;
-	AnimationMap m_walkAnimations;
-	AnimationMap m_runAnimations;
-	std::unordered_map<MovementState, AnimationMap*> m_animationMaps;
+	//typedef std::unordered_map<Direction, Animation*> AnimationMap;
+	//AnimationMap m_idleAnimations;
+	//AnimationMap m_walkAnimations;
+	//AnimationMap m_runAnimations;
+
+	AnimationSet* m_pIdleAnimations = nullptr;
+	AnimationSet* m_pWalkAnimations = nullptr;
+	AnimationSet* m_pRunAnimations = nullptr;
 
 	Animation* m_pCurrentAnimation = m_pCurrentAnimation = nullptr;
 	Animation* m_pPreviousAnimation = m_pCurrentAnimation = nullptr;
