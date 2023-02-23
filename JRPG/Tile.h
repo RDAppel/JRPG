@@ -5,6 +5,8 @@ struct Tile
 {
 	static const int SIZE = 32;
 
-	uint8_t tilesetIndex = 0;
-	uint32_t tileIndex = 0;
+	uint32_t TileIndex = 0;
+	uint8_t TilesetIndex = 0;
+	uint16_t X = 0;
+	uint16_t Y = 0;
 };

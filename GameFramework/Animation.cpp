@@ -107,5 +107,6 @@ Resource* Animation::Clone()
 	pClone->m_frames = m_frames;
 	pClone->m_frameTimes = m_frameTimes;
 	pClone->m_loopCount = m_loopCount;
+    pClone->m_path = m_path;
 	return pClone;
 }

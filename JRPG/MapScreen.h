@@ -24,10 +24,27 @@ public:
 		m_consoleSequence.SetOnComplete([this]() {
 			if (GetScreenManager().GetGame().GetConsoleInput(m_consoleInput))
 			{
-				if (m_consoleInput.substr(0, 10) == "set scale ")
+				const uint8_t COUNT = 3;
+				std::string commands[COUNT] = {
+					"set scale",
+					"fill background",
+					"print map",
+				};
+
+				for (uint8_t i = 0; i < COUNT; ++i)
 				{
-					float scale = std::stof(m_consoleInput.substr(10));
-					m_pMap->GetCamera().SetScale(Vector2::ONE * scale);
+					if (m_consoleInput.substr(0, commands[i].length()) == commands[i])
+					{
+						if (i == 0)
+						{
+							std::string args = m_consoleInput.substr(commands[i].length() + 1);
+							m_pMap->GetCamera().SetScale(Vector2::ONE * std::stof(args));
+						}
+						else if (i == 2)
+						{
+							m_pMap->PrintToConsole();
+						}
+					}
 				}
 			}
 		});
@@ -42,7 +59,7 @@ public:
 	virtual void LoadContent(ResourceManager& resourceManager) override
 	{
 		m_pResourceManager = &resourceManager;
-		if (!m_pMap) LoadMap("test");
+		if (!m_pMap) LoadMap("Maps\\Test_01.map");
 	}
 
 	virtual void HandleInput(const InputState& inputState)

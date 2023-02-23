@@ -7,7 +7,7 @@ class Layer
 
 public:
 
-	enum class Type : uint8_t { BACKGROUND, INTERACTION, FOREGROUND };
+	enum class Type : uint8_t { NONE, BACKGROUND, INTERACTION, FOREGROUND };
 
 private:
 
@@ -16,6 +16,23 @@ private:
 	std::vector<Tile> m_tiles;
 
 public:
+
+	static const std::string& GetTypeName(const Type type)
+	{
+		static const std::string names[] = { "None", "Background", "Interaction", "Foreground" };
+		return names[(uint8_t)type];
+	}
+
+	static const Type& GetTypeByName(const std::string& name)
+	{
+		static const std::map<std::string, Type> types = {
+			{ "None", Type::NONE },
+			{ "Background", Type::BACKGROUND },
+			{ "Interaction", Type::INTERACTION },
+			{ "Foreground", Type::FOREGROUND }
+		};
+		return types.at(name);
+	}
 
 	Layer() {}
 	Layer(const Layer&) = delete;
@@ -31,9 +48,9 @@ public:
 
 	virtual size_t GetSize() const { return m_tiles.size(); }
 
-	virtual void AddTile(const uint8_t tilesetIndex, const uint32_t tileIndex)
+	virtual void AddTile(const Tile tile)
 	{ 
-		m_tiles.push_back(Tile{ tilesetIndex, tileIndex });
+		m_tiles.push_back(tile);
 	}
 
 	// iterators

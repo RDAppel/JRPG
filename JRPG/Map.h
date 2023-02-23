@@ -14,8 +14,6 @@ private:
 
 	std::vector<Texture*> m_textures;
 
-	Texture* m_pTexture = nullptr;
-
 	MapComponent* m_pMapComponent = nullptr;
 
 	Camera m_camera;
@@ -33,5 +31,7 @@ public:
 	virtual void HandleInput(const InputState& inputState);
 
 	virtual Camera& GetCamera() { return m_camera; }
+
+	virtual void PrintToConsole() const;
 };
 

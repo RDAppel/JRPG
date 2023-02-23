@@ -62,6 +62,7 @@ public:
 
 		T* pT = new T;
 		pT->m_pResourceManager = this;
+		pT->m_path = path;
 		pT->m_id = m_nextResourceId;
 		m_nextResourceId++;
 

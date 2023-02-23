@@ -13,6 +13,8 @@ private:
 
 protected:
 
+	std::string m_path = "";
+
 	ResourceManager* m_pResourceManager = nullptr;
 
 	virtual Resource* Clone() { return nullptr; }
@@ -23,6 +25,8 @@ public:
 	virtual ~Resource();
 
 	virtual int GetId() const { return m_id; }
+
+	virtual const std::string& GetPath() const { return m_path; }
 
 	virtual bool IsCloneable() { return false; }
 

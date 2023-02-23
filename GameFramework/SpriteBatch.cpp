@@ -59,7 +59,7 @@ void SpriteBatch::End()
 		else DrawFont(*m_it);
 	}
 
-	std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
+	//std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
 
 	m_drawables.clear();
 	Transform::IDENTITY.Apply();
