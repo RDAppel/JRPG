@@ -2,6 +2,7 @@
 #include "_PCH.h"
 
 #include "Character.h"
+#include "MapComponent.h"
 
 bool Character::Load(const std::string& path)
 {

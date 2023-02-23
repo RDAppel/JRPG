@@ -8,7 +8,7 @@ AnimationSet::~AnimationSet()
 {
     for (Animation* pAnimation : m_animations)
     {
-		m_pResourceManager->RemoveResource(pAnimation->GetId());
+		m_pResourceManager->Remove(pAnimation);
     }
 }
 
@@ -16,6 +16,7 @@ bool AnimationSet::Load(const std::string& path)
 {
     std::ifstream fileIn(path.c_str(), std::ifstream::in);
     if (!fileIn.is_open() || !fileIn.good()) return false;
+    auto error = [&fileIn]() { fileIn.close(); return false; };
 
     std::string line;
     while (getline(fileIn, line))
@@ -26,10 +27,11 @@ bool AnimationSet::Load(const std::string& path)
         if (line[0] == '#') continue;
 
         Animation* pAnimation = m_pResourceManager->Load<Animation>(line);
-        if (!pAnimation) return false;
+        if (!pAnimation) return error();
         m_animations.push_back(pAnimation);
 	}
 
+    fileIn.close();
     return true;
 }
 

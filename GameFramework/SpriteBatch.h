@@ -68,7 +68,15 @@ private:
 
 		struct BackToFront
 		{
-			bool operator()(const Drawable* l, const Drawable* r) { return l < r; }
+			bool operator()(const Drawable* l, const Drawable* r) { return r < l; }
+		};
+
+		struct Texture
+		{
+			bool operator()(const Drawable* l, const Drawable* r)
+			{
+				return l->Type.pBitmap < r->Type.pBitmap;
+			}
 		};
 	};
 
@@ -87,12 +95,12 @@ private:
 	
 public:
 
-	SpriteBatch(const uint32_t defaultCount = 1000);
+	SpriteBatch(const uint32_t defaultCount = 5);
 	SpriteBatch(const SpriteBatch&) = delete;
 	~SpriteBatch();
 
 	virtual void Begin(const SpriteSortMode sortMode = SpriteSortMode::DEFERRED,
-		BlendState blendState = BlendState::ALPHA);
+		BlendState blendState = BlendState::ALPHA, const Transform* pTransform = nullptr);
 
 	virtual void End();
 

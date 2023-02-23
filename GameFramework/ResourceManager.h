@@ -20,12 +20,11 @@ public:
 
 	void SetContentPath(const std::string& path) { m_contentPath = path; }
 
-	void RemoveResource(const int id)
+	void Remove(Resource *pResource)
 	{
-		std::unordered_map<std::string, Resource*>::iterator it = m_resources.begin();
-		for (; it != m_resources.end(); ++it)
+		for (auto it = m_resources.begin(); it != m_resources.end(); ++it)
 		{
-			if (it->second->m_id == id)
+			if (it->second == pResource)
 			{
 				m_resources.erase(it);
 				return;
@@ -34,7 +33,7 @@ public:
 
 		for (auto it = m_clones.begin(); it != m_clones.end(); ++it)
 		{
-			if ((*it)->m_id == id)
+			if (*it == pResource)
 			{
 				m_clones.erase(it);
 				return;

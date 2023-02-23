@@ -23,7 +23,7 @@ public:
 	ScreenManager(Game& game) { m_pGame = &game; }
 	virtual ~ScreenManager() { }
 
-	virtual void AddScreen(Screen& screen);
+	virtual void AddScreen(Screen* screen);
 
 	virtual void HandleInput(const InputState& input);
 

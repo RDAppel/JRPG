@@ -2,9 +2,10 @@
 
 #include "_PCH.h"
 
+#include "Component.h"
 #include "AnimationSet.h"
 
-class MapComponent : public Component
+class MapComponent : public Component, public ITargetable
 {
 	enum class MovementState { IDLE, WALKING, RUNNING };
 
@@ -58,6 +59,6 @@ public:
 
 	virtual void Draw(SpriteBatch& spriteBatch);
 
-
+	virtual Vector2 GetPosition() const { return m_position; }
 };
 

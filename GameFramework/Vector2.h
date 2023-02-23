@@ -25,10 +25,11 @@ public:
 
 	Vector2 operator-() const;
 
-	Vector2 operator+(const Vector2& other) const;
-	Vector2 operator-(const Vector2& other) const;
-	Vector2 operator*(const float scalar) const;
-	Vector2 operator/(const float scalar) const;
+	const Vector2 operator+(const Vector2& other) const;
+	const Vector2 operator-(const Vector2& other) const;
+	const Vector2 operator*(const float scalar) const;
+	const Vector2 operator/(const float scalar) const;
+	const Vector2 operator/(const Vector2& other) const;
 
 	Vector2& operator+=(const Vector2& other);
 	Vector2& operator-=(const Vector2& other);
@@ -50,7 +51,6 @@ public:
 	Vector2 Right() const { return Vector2(Y, -X); }
 
 	std::string ToString() const;
-
 
 	static Vector2 Lerp(const Vector2& start, const Vector2& end, const float value, bool clamp = false);
 	static Vector2 GetRandom();

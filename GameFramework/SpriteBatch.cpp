@@ -15,7 +15,7 @@ SpriteBatch::~SpriteBatch()
 }
 
 void SpriteBatch::Begin(const SpriteSortMode sortMode,
-	BlendState blendState)
+	BlendState blendState, const Transform* pTransform)
 {
 	m_isStarted = true;
 	m_sortMode = sortMode;
@@ -30,32 +30,39 @@ void SpriteBatch::Begin(const SpriteSortMode sortMode,
 	{
 		al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ONE);
 	}
+
+	if (pTransform) pTransform->Apply();
 }
 
 void SpriteBatch::End()
 {
-	if (m_sortMode != SpriteSortMode::IMMEDIATE)
-	{
-		if (m_sortMode == SpriteSortMode::BACK_TO_FRONT)
-		{
-			std::sort(m_drawables.begin(), m_drawables.end(), Compare::FrontToBack());
-		}
-		else if (m_sortMode == SpriteSortMode::FRONT_TO_BACK)
-		{
-			std::sort(m_drawables.begin(), m_drawables.end(), Compare::BackToFront());
-		}
+	if (m_sortMode == SpriteSortMode::IMMEDIATE) return;
 
-		m_it = m_drawables.begin();
-		for (; m_it != m_drawables.end(); ++m_it)
-		{
-			if ((*m_it)->isBitmap) DrawBitmap(*m_it);
-			else DrawFont(*m_it);
-		}
+	if (m_sortMode == SpriteSortMode::BACK_TO_FRONT)
+	{
+		std::sort(m_drawables.begin(), m_drawables.end(), Compare::FrontToBack());
+	}
+	else if (m_sortMode == SpriteSortMode::FRONT_TO_BACK)
+	{
+		std::sort(m_drawables.begin(), m_drawables.end(), Compare::BackToFront());
+	}
+	else if (m_sortMode == SpriteSortMode::TEXTURE)
+	{
+		std::sort(m_drawables.begin(), m_drawables.end(), Compare::Texture());
 	}
 
-	//std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
+	m_it = m_drawables.begin();
+		
+	for (; m_it != m_drawables.end(); ++m_it)
+	{
+		if ((*m_it)->isBitmap) DrawBitmap(*m_it);
+		else DrawFont(*m_it);
+	}
+
+	std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
 
 	m_drawables.clear();
+	Transform::IDENTITY.Apply();
 }
 
 void SpriteBatch::Draw(const Texture* pTexture, const Vector2 position, const Color color,
@@ -142,7 +149,6 @@ void SpriteBatch::Draw(const Font* pFont, std::string pText, const Vector2 posit
 
 	if (m_sortMode == SpriteSortMode::IMMEDIATE) DrawFont(pDrawable);
 	else m_drawables.push_back(pDrawable);
-
 }
 
 

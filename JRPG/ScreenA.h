@@ -19,7 +19,7 @@ public:
 	ScreenA()
 	{
 		SetOnExit([]() { std::cout << "ScreenA exited" << std::endl; });
-		SetOnRemove([this]() { GetScreenManager().AddScreen(*(new ScreenB)); });
+		SetOnRemove([this]() { GetScreenManager().AddScreen(new ScreenB); });
 	}
 
 

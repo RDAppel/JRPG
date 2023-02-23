@@ -48,5 +48,7 @@ public:
 
 	virtual const Region& GetCurrentFrame() const { return m_frames[m_currentIndex]; }
 
+	virtual Vector2 GetCenter() const { return m_frames[0].GetSize() / 2; }
+
 };
 

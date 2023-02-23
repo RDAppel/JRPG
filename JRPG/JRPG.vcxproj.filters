@@ -9,10 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\TestScreens">
-      <UniqueIdentifier>{fcbd4c7e-ec8f-45ea-af3a-bbe279f82085}</UniqueIdentifier>
-      <Extensions>cpp;c;h;</Extensions>
-    </Filter>
     <Filter Include="Source Files\Characters">
       <UniqueIdentifier>{78aa9b95-4e57-4afc-9a21-13791b1dbb04}</UniqueIdentifier>
       <Extensions>cpp;c;h;</Extensions>
@@ -20,15 +16,19 @@
     <Filter Include="Source Files\Enumerations">
       <UniqueIdentifier>{34361cca-5203-428c-acc2-482188ecb39b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Maps">
+      <UniqueIdentifier>{bc87b39e-23eb-4b71-8d8c-77e97d5920e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Screens">
+      <UniqueIdentifier>{fcbd4c7e-ec8f-45ea-af3a-bbe279f82085}</UniqueIdentifier>
+      <Extensions>cpp;c;h;</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="_PCH.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="JRPG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
@@ -39,6 +39,12 @@
     </ClCompile>
     <ClCompile Include="AnimationSet.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Source Files\Maps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,10 +58,10 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ScreenA.h">
-      <Filter>Source Files\TestScreens</Filter>
+      <Filter>Source Files\Screens</Filter>
     </ClInclude>
     <ClInclude Include="ScreenB.h">
-      <Filter>Source Files\TestScreens</Filter>
+      <Filter>Source Files\Screens</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Source Files\Characters</Filter>
@@ -71,6 +77,18 @@
     </ClInclude>
     <ClInclude Include="AnimationSet.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Source Files\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="MapScreen.h">
+      <Filter>Source Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Source Files\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Source Files\Maps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

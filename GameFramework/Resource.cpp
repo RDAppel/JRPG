@@ -1,7 +1,7 @@
 
 #include "_PCH.h"
 
-Resource::~Resource() { m_pResourceManager->RemoveResource(m_id); }
+Resource::~Resource() { m_pResourceManager->Remove(this); }
 
 void Resource::SplitLine(const std::string& line, std::vector<std::string>& tokens,
 	const char delimeter, bool trimTokens)

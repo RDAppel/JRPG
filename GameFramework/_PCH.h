@@ -25,8 +25,6 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_windows.h>
 
-
-
 /* Time */
 #include "GameTime.h"
 
@@ -35,6 +33,7 @@
 #include "Color.h"
 #include "Vector2.h"
 #include "Region.h"
+#include "Transform.h"
 
 /* Input */
 #include "KeyState.h"
@@ -50,7 +49,9 @@
 #include "ResourceManager.h"
 
 /* Graphics */
+#include "ITargetable.h"
 #include "SpriteBatch.h"
+#include "Camera.h"
 
 /* Screen Management */
 #include "Screen.h"

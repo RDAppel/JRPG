@@ -5,7 +5,6 @@ int Game::s_screenWidth = 1600;
 int Game::s_screenHeight = 900;
 std::string Game::s_windowTitle = "RPG";
 
-
 Game::Game()
 {
 	m_pConsoleHandle = GetConsoleWindow();
@@ -31,12 +30,18 @@ void Game::Update()
 
 	m_currentTime = al_get_time();
 
-	double difference = m_currentTime - m_previousTime;
-	if (difference >= 1.0)
+	double frameTime = m_currentTime - m_previousTime;
+	if (frameTime >= 1.0)
 	{
-		m_actualFramesPerSecond = m_frameCounter / difference;
+		m_actualFramesPerSecond = m_frameCounter / frameTime;
 		m_frameCounter = 0;
 		m_previousTime = m_currentTime;
+	}
+
+	// give it 2 seconds to stabilize
+	if (m_currentTime < 2)
+	{
+		m_actualFramesPerSecond = m_targetFramesPerSecond;
 	}
 
 	m_pInputState->Update(m_gameTime);
@@ -53,13 +58,14 @@ int Game::Run()
 		return -1;
 	}
 
+	if (m_requireVSync) al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_REQUIRE);
+
 	ALLEGRO_DISPLAY* m_pDisplay = al_create_display(s_screenWidth, s_screenHeight);
 	if (!m_pDisplay)
 	{
 		std::cout << "Couldn't create a display!";
 		return -1;
 	}
-
 
 	m_pDisplayHandle = al_get_win_window_handle(m_pDisplay);
 	al_set_window_title(m_pDisplay, s_windowTitle.c_str());
@@ -80,6 +86,8 @@ int Game::Run()
 	if (al_is_keyboard_installed()) {
 		al_register_event_source(pEventQueue, al_get_keyboard_event_source());
 	}
+
+	LoadContent(m_resourceManager);
 
 	bool redraw = false;
 
@@ -113,14 +121,11 @@ int Game::Run()
 		if (redraw && al_event_queue_is_empty(pEventQueue))
 		{
 			redraw = false;
-
 			Draw(*m_pSpriteBatch);
-
 			al_flip_display();
+			al_clear_to_color(m_clearColor.GetAllegroColor());
 
 			m_frameCounter++;
-
-			al_clear_to_color(m_clearColor.GetAllegroColor());
 		}
 	}
 
@@ -129,7 +134,7 @@ int Game::Run()
 
 void Game::DisplayFrameRate()
 {
-	int fps = (int)m_actualFramesPerSecond;
+	double fps = m_actualFramesPerSecond;
 	if (!m_pFrameCounterFont)
 	{
 		std::cout << "FPS: " << fps << "\n";
@@ -137,11 +142,12 @@ void Game::DisplayFrameRate()
 	else
 	{
 		ALLEGRO_FONT* pFont = m_pFrameCounterFont->GetAllegroFont();
-		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 9, 9, 0, "%d", fps);
-		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 9, 11, 0, "%d", fps);
-		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 11, 0, "%d", fps);
-		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 9, 0, "%d", fps);
-		al_draw_textf(pFont, al_map_rgb(0, 255, 0), 10, 10, 0, "%d", fps);
+		const char* format = "%.1f";
+		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 9, 9, 0, format, fps);
+		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 9, 11, 0, format, fps);
+		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 11, 0, format, fps);
+		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 9, 0, format, fps);
+		al_draw_textf(pFont, al_map_rgb(0, 255, 0), 10, 10, 0, format, fps);
 	}
 
 }
