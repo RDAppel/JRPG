@@ -15,7 +15,7 @@ SpriteBatch::~SpriteBatch()
 }
 
 void SpriteBatch::Begin(const SpriteSortMode sortMode,
-	BlendState blendState)
+	BlendState blendState, const Transform* pTransform)
 {
 	m_isStarted = true;
 	m_sortMode = sortMode;
@@ -30,6 +30,8 @@ void SpriteBatch::Begin(const SpriteSortMode sortMode,
 	{
 		al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_ONE);
 	}
+
+	if (pTransform) pTransform->Apply();
 }
 
 void SpriteBatch::End()
@@ -53,9 +55,10 @@ void SpriteBatch::End()
 		}
 	}
 
-	//std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
+	std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
 
 	m_drawables.clear();
+	Transform::IDENTITY.Apply();
 }
 
 void SpriteBatch::Draw(const Texture* pTexture, const Vector2 position, const Color color,

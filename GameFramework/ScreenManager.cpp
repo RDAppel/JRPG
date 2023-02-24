@@ -2,13 +2,13 @@
 #include "_PCH.h"
 
 
-void ScreenManager::AddScreen(Screen& screen)
+void ScreenManager::AddScreen(Screen* pScreen)
 {
-	screen.m_pScreenManager = this;
+	pScreen->m_pScreenManager = this;
 
-	screen.LoadContent(m_pGame->GetResourceManager());
+	pScreen->LoadContent(m_pGame->GetResourceManager());
 
-	m_screensToAdd.push_back(&screen);
+	m_screensToAdd.push_back(pScreen);
 }
 
 void ScreenManager::HandleInput(const InputState& input)

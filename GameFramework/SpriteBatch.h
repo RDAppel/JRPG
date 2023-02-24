@@ -92,7 +92,7 @@ public:
 	~SpriteBatch();
 
 	virtual void Begin(const SpriteSortMode sortMode = SpriteSortMode::DEFERRED,
-		BlendState blendState = BlendState::ALPHA);
+		BlendState blendState = BlendState::ALPHA, const Transform* pTransform = nullptr);
 
 	virtual void End();
 

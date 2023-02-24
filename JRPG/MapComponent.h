@@ -1,13 +1,14 @@
 #pragma once
 
 #include "_PCH.h"
+#include "Component.h"
 
-class MapComponent : public Component
+class MapComponent : public Component, public ITargetable
 {
 	enum class MovementState { IDLE, WALKING, RUNNING };
 
 	// todo: remove this when we can load properly
-	friend class ScreenA;
+	friend class JRPG;
 
 private:
 
@@ -52,6 +53,8 @@ public:
 	virtual void Update(const GameTime& gameTime);
 
 	virtual void Draw(SpriteBatch& spriteBatch);
+
+	virtual Vector2 GetPosition() const { return m_position; }
 
 
 };

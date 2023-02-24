@@ -42,15 +42,15 @@ public:
 		}
 
 		T* pT = new T;
+		pT->m_id = m_nextResourceId;
+		pT->m_path = path;
+		pT->m_pResourceManager = this;
+		m_nextResourceId++;
 
 		std::string fullPath = (appendContentPath ? m_contentPath : "").append(path);
 		if (pT->Load(fullPath))
 		{
 			if (cache) m_resources[path] = pT;
-			pT->m_id = m_nextResourceId;
-			pT->m_pResourceManager = this;
-			m_nextResourceId++;
-
 			return pT;
 		}
 

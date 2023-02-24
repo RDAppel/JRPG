@@ -11,6 +11,10 @@ private:
 
 	int m_id = -1;
 
+protected:
+
+	std::string m_path = "";
+
 	ResourceManager* m_pResourceManager = nullptr;
 
 public:

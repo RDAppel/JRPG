@@ -5,8 +5,8 @@
 bool Animation::Load(const std::string& path)
 {
     std::ifstream fileIn(path.c_str(), std::ifstream::in);
-
     if (!fileIn.is_open() || !fileIn.good()) return false;
+    auto error = [&fileIn] { fileIn.close(); return false; };
 
     enum Step { FrameTime, TileSize, TilesWide, FrameIndices, LoopCount, Done };
 
@@ -35,15 +35,15 @@ bool Animation::Load(const std::string& path)
         }
         else if (currentStep == TileSize)
         {
-            if (splitItems.size() != 2) return false;
+            if (splitItems.size() != 2) return error();
             width = stoi(splitItems[0]);
             height = stoi(splitItems[1]);
-            if (width <= 0 || height <= 0) return false;
+            if (width <= 0 || height <= 0) return error();
         }
         else if (currentStep == TilesWide)
         {
             tilesWide = stoi(splitItems[0]);
-            if (tilesWide <= 0) return false;
+            if (tilesWide <= 0) return error();
         }
         else if (currentStep == FrameIndices)
         {
@@ -55,7 +55,7 @@ bool Animation::Load(const std::string& path)
                 m_frames.push_back(Region(x, y, width, height));
             }
 
-            if (m_frames.size() == 0) return false;
+            if (m_frames.size() == 0) return error();
 
             // expand the frame times if necessary to match the number of frames
             if (m_frameTimes.size() < m_frames.size())
@@ -104,6 +104,7 @@ Animation* Animation::Clone()
 {
 	Animation* pClone = new Animation();
 	pClone->m_frames = m_frames;
+    pClone->m_path = m_path;
 	pClone->m_frameTimes = m_frameTimes;
 	pClone->m_loopCount = m_loopCount;
 	return pClone;

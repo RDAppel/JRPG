@@ -20,5 +20,7 @@ public:
 		X = other.X; Y = other.Y; Width = other.Width; Height = other.Height;
 	}
 
+	Vector2 GetSize() const { return Vector2(Width, Height); }
+
 };
 

@@ -16,6 +16,8 @@ private:
 	double m_targetFramesPerSecond = 60;
 	bool m_isRunning = true;
 
+	bool m_requireVSync = false;
+
 	double m_currentTime = 0;
 	double m_previousTime = 0;
 	double m_actualFramesPerSecond = 0;
@@ -50,11 +52,17 @@ public:
 
 	static void SetWindowTitle(const std::string title) { s_windowTitle = title; }
 
+	static Vector2 GetScreenSize() { return Vector2(s_screenWidth, s_screenHeight); }
+
 	virtual void Update();
 
 	virtual int Run();
 
+	virtual void LoadContent(ResourceManager& resourceManager) {};
+
 	virtual void DisplayFrameRate();
+
+	virtual void SetRequireVSync(const bool require = true) { m_requireVSync = require; }
 
 	virtual void SetTargetFramesPerSecond(const int frames) { m_targetFramesPerSecond = frames; }
 
@@ -67,5 +75,7 @@ public:
 	virtual ScreenManager& GetScreenManager() { return *m_pScreenManager; }
 
 	virtual bool GetConsoleInput(std::string& text);
+
+
 
 };

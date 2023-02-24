@@ -25,6 +25,9 @@
       <UniqueIdentifier>{2e269fba-686b-4410-ae2b-745125bec3b2}</UniqueIdentifier>
       <Extensions>cpp;c;h;</Extensions>
     </Filter>
+    <Filter Include="Source Files\Interfaces">
+      <UniqueIdentifier>{03a2de13-5d4c-4063-943a-33c19dce8796}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_PCH.cpp">
@@ -68,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="KeySequence.cpp">
       <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +136,15 @@
     </ClInclude>
     <ClInclude Include="Region.h">
       <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ITargetable.h">
+      <Filter>Source Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

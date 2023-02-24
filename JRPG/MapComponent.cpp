@@ -100,5 +100,6 @@ void MapComponent::Update(const GameTime& gameTime)
 
 void MapComponent::Draw(SpriteBatch& spriteBatch)
 {
-	spriteBatch.Draw(m_pCurrentAnimation, m_position);
+	Vector2 center = m_pCurrentAnimation->GetCenter();
+	spriteBatch.Draw(m_pCurrentAnimation, m_position, Color::WHITE, center);
 }

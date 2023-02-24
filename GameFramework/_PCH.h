@@ -35,6 +35,10 @@
 #include "Color.h"
 #include "Vector2.h"
 #include "Region.h"
+#include "Transform.h"
+
+/* Interfaces */
+#include "ITargetable.h"
 
 /* Input */
 #include "KeyState.h"
@@ -51,6 +55,7 @@
 
 /* Graphics */
 #include "SpriteBatch.h"
+#include "Camera.h"
 
 /* Screen Management */
 #include "Screen.h"
