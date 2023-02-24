@@ -39,5 +39,7 @@ public:
 
 	const Vector2& GetScale() const { return m_scale; }
 
+	Vector2 GetScreenToWorldPosition(const Vector2& screenPosition) const;
+
 };
 

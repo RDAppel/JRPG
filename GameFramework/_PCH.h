@@ -36,6 +36,7 @@
 #include "Transform.h"
 
 /* Input */
+#include "MouseButton.h"
 #include "KeyState.h"
 #include "InputState.h"
 #include "KeySequence.h"

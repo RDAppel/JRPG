@@ -142,6 +142,9 @@
     <ClInclude Include="Transform.h">
       <Filter>Source Files\Math</Filter>
     </ClInclude>
+    <ClInclude Include="MouseButton.h">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

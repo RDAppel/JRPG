@@ -51,7 +51,7 @@ bool Map::Load(const std::string& path)
 	++it;
 	uint8_t layersLeft = std::stoi(*it);
 	Layer::Type layerType = Layer::Type::NONE;
-	uint8_t tilesLeft = 0;
+	uint32_t tilesLeft = 0;
 
 	// read in layers
 	while (layersLeft)
@@ -176,7 +176,7 @@ void Map::Draw(SpriteBatch& spriteBatch)
 			int tileX = tile.TileIndex % 8 * Tile::SIZE;
 			int tileY = tile.TileIndex / 8 * Tile::SIZE;
 
-			Region source(tileX, tileY, Tile::SIZE, Tile::SIZE);
+			Region source(tileX + 1, tileY + 1, Tile::SIZE - 2, Tile::SIZE - 2);
 			Vector2 position(x * Tile::SIZE, y * Tile::SIZE);
 			Color c = Color::WHITE;
 			bool xEnd = (x == m_dimensions.X - 1 || x == 0);
@@ -221,4 +221,19 @@ void Map::PrintToConsole() const
 
 		layerIndex++;
 	}
+}
+
+bool Map::AddTileAtPosition(const int layerIndex, Tile tile, bool stack)
+{
+	if (!stack)
+	{
+		// check if there is already a tile at this position
+		for (Tile& t : *m_layers[layerIndex])
+		{
+			if (t.X == tile.X && t.Y == tile.Y) return false;
+		}
+	}
+
+	m_layers[layerIndex]->AddTile(tile);
+	return true;
 }

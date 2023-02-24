@@ -171,6 +171,7 @@
     <ClInclude Include="KeySequence.h" />
     <ClInclude Include="KeyState.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="MouseButton.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />

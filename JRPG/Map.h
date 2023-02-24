@@ -33,5 +33,7 @@ public:
 	virtual Camera& GetCamera() { return m_camera; }
 
 	virtual void PrintToConsole() const;
+
+	virtual bool AddTileAtPosition(const int layerIndex, Tile tile, bool stack = false);
 };
 

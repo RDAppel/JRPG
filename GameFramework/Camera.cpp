@@ -28,5 +28,13 @@ void Camera::Update(const GameTime& gameTime)
 	m_transform.Scale(m_scale);
 	m_transform.Rotate(0);
 	m_transform.Translate(Game::GetScreenSize() / 2);
+}
 
+Vector2 Camera::GetScreenToWorldPosition(const Vector2& screenPosition) const
+{
+	Vector2 worldPosition = screenPosition;
+	worldPosition -= Game::GetScreenSize() / 2;
+	worldPosition /= m_scale;
+	worldPosition += m_position;
+	return worldPosition;
 }

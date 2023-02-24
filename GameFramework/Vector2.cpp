@@ -52,6 +52,11 @@ const Vector2 Vector2::operator/(const float scalar) const
 	return Vector2(X / scalar, Y / scalar);
 }
 
+const Vector2 Vector2::operator*(const Vector2& other) const
+{
+	return Vector2(X * other.X, Y * other.Y);
+}
+
 const Vector2 Vector2::operator/(const Vector2& other) const
 {
 	return Vector2(X / other.X, Y / other.Y);
@@ -69,7 +74,21 @@ Vector2& Vector2::operator-=(const Vector2& other)
 	X -= other.X;
 	Y -= other.Y;
 	return *this;
-}	
+}
+
+Vector2& Vector2::operator*=(const Vector2& other)
+{
+	X *= other.X;
+	Y *= other.Y;
+	return *this;
+}
+
+Vector2& Vector2::operator/=(const Vector2& other)
+{
+	X /= other.X;
+	Y /= other.Y;
+	return *this;
+}
 
 Vector2& Vector2::operator*=(const float scalar)
 {

@@ -65,7 +65,27 @@ public:
 	virtual void HandleInput(const InputState& inputState)
 	{
 		m_consoleSequence.HandleInput(inputState);
-		if (m_pMap) m_pMap->HandleInput(inputState);
+
+		if (!m_pMap) return;
+
+		//std::cout << inputState.GetMousePosition() << "\n";
+		Vector2 mousePosition = inputState.GetMousePosition();
+		Vector2 worldPosition = m_pMap->GetCamera().GetScreenToWorldPosition(mousePosition) / Tile::SIZE;
+
+		//std::cout << (int)worldPosition.X << ", " << (int)worldPosition.Y << "\n";
+
+		if (inputState.IsMouseButtonDown(MouseButton::LEFT))
+		{
+			Tile tile;
+			tile.X = (int)worldPosition.X;
+			tile.Y = (int)worldPosition.Y;
+			tile.TilesetIndex = 0;
+			tile.TileIndex = Math::GetRandomInt(0, 4);
+			m_pMap->AddTileAtPosition(0, tile);
+		}
+		
+
+		m_pMap->HandleInput(inputState);
 	}
 
 	virtual void Update(const GameTime& gameTime) override

@@ -27,12 +27,15 @@ public:
 
 	const Vector2 operator+(const Vector2& other) const;
 	const Vector2 operator-(const Vector2& other) const;
+	const Vector2 operator*(const Vector2& other) const;
+	const Vector2 operator/(const Vector2& other) const;
 	const Vector2 operator*(const float scalar) const;
 	const Vector2 operator/(const float scalar) const;
-	const Vector2 operator/(const Vector2& other) const;
 
 	Vector2& operator+=(const Vector2& other);
 	Vector2& operator-=(const Vector2& other);
+	Vector2& operator*=(const Vector2& other);
+	Vector2& operator/=(const Vector2& other);
 	Vector2& operator*=(const float scalar);
 	Vector2& operator/=(const float scalar);
 

@@ -1,6 +1,12 @@
 
 #include "_PCH.h"
 
+InputState::InputState()
+{
+	al_install_keyboard();
+	al_install_mouse();
+}
+
 void InputState::Update(const GameTime& gameTime)
 {
 	if (al_is_keyboard_installed())
@@ -21,6 +27,14 @@ void InputState::Update(const GameTime& gameTime)
 			if (IsKeyUp((Key)i)) m_pressedKeyTimes[i] = 0;
 			else m_pressedKeyTimes[i] += gameTime.GetTimeElapsed();
 		}
+	}
+
+	if (al_is_mouse_installed())
+	{
+		m_previousMouseState = m_currentMouseState;
+		al_get_mouse_state(&m_currentMouseState);
+
+		//std::cout << m_currentMouseState.buttons << std::endl;
 	}
 }
 
