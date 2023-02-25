@@ -77,5 +77,4 @@ public:
 	virtual bool GetConsoleInput(std::string& text);
 
 
-
 };

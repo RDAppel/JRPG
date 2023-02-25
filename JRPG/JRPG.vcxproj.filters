@@ -42,9 +42,13 @@
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Content\Test_01.map" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_PCH.h">
@@ -71,14 +75,14 @@
     <ClInclude Include="Direction.h">
       <Filter>Source Files\Enumerations</Filter>
     </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Source Files\Map</Filter>
+    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Source Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
-      <Filter>Source Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Source Files\Map</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="MapScreen.h">
       <Filter>Source Files\Screens</Filter>
