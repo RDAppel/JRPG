@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JRPG", "JRPG\JRPG.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameFramework", "GameFramework\GameFramework.vcxproj", "{4BBF1E79-11B7-4A4F-91B3-26B91463B474}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcxproj", "{83B26E82-7E60-46B0-8FCB-EB741974AC94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{4BBF1E79-11B7-4A4F-91B3-26B91463B474}.Release|x64.Build.0 = Release|x64
 		{4BBF1E79-11B7-4A4F-91B3-26B91463B474}.Release|x86.ActiveCfg = Release|Win32
 		{4BBF1E79-11B7-4A4F-91B3-26B91463B474}.Release|x86.Build.0 = Release|Win32
+		{83B26E82-7E60-46B0-8FCB-EB741974AC94}.Debug|x64.ActiveCfg = Debug|x64
+		{83B26E82-7E60-46B0-8FCB-EB741974AC94}.Debug|x64.Build.0 = Debug|x64
+		{83B26E82-7E60-46B0-8FCB-EB741974AC94}.Debug|x86.ActiveCfg = Debug|Win32
+		{83B26E82-7E60-46B0-8FCB-EB741974AC94}.Debug|x86.Build.0 = Debug|Win32
+		{83B26E82-7E60-46B0-8FCB-EB741974AC94}.Release|x64.ActiveCfg = Release|x64
+		{83B26E82-7E60-46B0-8FCB-EB741974AC94}.Release|x64.Build.0 = Release|x64
+		{83B26E82-7E60-46B0-8FCB-EB741974AC94}.Release|x86.ActiveCfg = Release|Win32
+		{83B26E82-7E60-46B0-8FCB-EB741974AC94}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,13 @@
 
 #include "_PCH.h"
 
+InputState::InputState()
+{
+	al_install_keyboard();
+	al_install_mouse();
+}
+
+
 void InputState::Update(const GameTime& gameTime)
 {
 	if (al_is_keyboard_installed())

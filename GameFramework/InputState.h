@@ -26,7 +26,7 @@ private:
 
 public:
 
-	InputState() { al_install_keyboard(); }
+	InputState();
 	InputState(const InputState&) = delete;
 
 	InputState& operator=(const InputState&) = delete;

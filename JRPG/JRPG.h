@@ -19,6 +19,8 @@ public:
 		SetRequireVSync(true);
 		SetTargetFramesPerSecond(60);
 		SetClearColor(Color::BLACK);
+
+		GetResourceManager().SetContentPath("..\\JRPG\\Content\\");
 	}
 
 	virtual ~JRPG() {}

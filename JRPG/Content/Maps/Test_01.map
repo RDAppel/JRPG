@@ -1,0 +1,22 @@
+
+# Dimensions
+80, 60
+
+# Textures
+1
+Textures\Tilesets\Exterior_01.png
+
+# Layers
+2
+
+# Layer 0
+Background
+3
+0, 0, 0, 0
+1, 0, 0, 4
+2, 0, 0, 8
+
+# Layer 1
+Foreground
+1
+0, 0, 0, 0
