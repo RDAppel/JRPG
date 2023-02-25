@@ -76,12 +76,27 @@ void Editor::Update()
 	if (m_isDemoVisible) ImGui::ShowDemoWindow(&m_isDemoVisible);
 
 
+	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+	if (ImGui::BeginPopupModal("New Project", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text("All those beautiful files will be deleted.\nThis operation cannot be undone!");
+		ImGui::Separator();
+		//ImGui::Text("Project Name:");
+		//ImGui::InputText("Name: ", nullptr, 0, 0, 0);
+		ImGui::EndPopup();
+	}
+
 	ImGui::BeginMainMenuBar();
 
 	if (ImGui::BeginMenu("File"))
 	{
-		ImGui::MenuItem("test1");
-		ImGui::MenuItem("test2");
+		if (ImGui::MenuItem("New Project..."))
+		{
+			ImGui::OpenPopup("New Project");
+		}
+
+		//ImGui::MenuItem("Open Project");
 		ImGui::Separator();
 		if (ImGui::MenuItem("Exit")) Quit();
 
@@ -108,6 +123,11 @@ void Editor::Update()
 		ImGui::MenuItem("Edit Run Settings");
 
 		ImGui::EndMenu();
+	}
+
+	if (ImGui::ArrowButton("RunArrow", ImGuiDir_Right))
+	{
+		StartProcess(L"JRPG.exe", L"C:\\Users\\Ryan\\Desktop\\JRPG\\Debug");
 	}
 
 	ImGui::EndMainMenuBar();
@@ -147,7 +167,7 @@ void Editor::Update()
 	static float f = 0.0f;
 	static int counter = 0;
 
-	ImGui::Begin("Hello, world!");
+	ImGui::Begin("Hello, world!", nullptr, ImGuiWindowFlags_NoCollapse);
 	ImGui::Text("This is some useful text.");
 
 	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);

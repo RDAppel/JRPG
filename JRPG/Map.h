@@ -20,7 +20,7 @@ private:
 	Camera m_camera;
 
 public:
-	
+
 	virtual bool Load(const std::string& path) override;
 
 	virtual void SetMapComponent(MapComponent* pMapComponent);

@@ -67,17 +67,17 @@
     <ClInclude Include="Direction.h">
       <Filter>Source Files\Enumerations</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Source Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Layer.h">
-      <Filter>Source Files\Map</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
+      <Filter>Source Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
       <Filter>Source Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="MapScreen.h">
       <Filter>Source Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Source Files\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

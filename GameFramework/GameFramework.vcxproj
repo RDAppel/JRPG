@@ -171,7 +171,6 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />

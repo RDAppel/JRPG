@@ -68,11 +68,11 @@
     <ClCompile Include="KeySequence.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,23 +124,20 @@
     <ClInclude Include="GameTime.h">
       <Filter>Source Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="resource1.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Source Files\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Region.h">
       <Filter>Source Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="ITargetable.h">
       <Filter>Source Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

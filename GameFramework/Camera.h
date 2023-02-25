@@ -8,17 +8,19 @@ private:
 
 	ITargetable* m_pTarget = nullptr;
 
-	Vector2 m_position = Vector2(0, 0);
+	Vector2 m_position = Vector2::ZERO;
 
 	Transform m_transform;
 
 	Region m_bounds;
 
-	Vector2 m_scale = Vector2::ONE;
+	Vector2 m_scale;
 
 	float m_speed = 1;
 
 public:
+
+	Camera() {}
 
 	void Update(const GameTime& gameTime);
 
@@ -41,4 +43,3 @@ public:
 	const Transform& GetTransform() const { return m_transform; }
 
 };
-

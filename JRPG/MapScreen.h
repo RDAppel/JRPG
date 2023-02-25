@@ -40,7 +40,7 @@ public:
 	{
 		if (!m_pMap) return;
 		m_pMap->Update(gameTime);
-	}	
+	}
 
 	virtual void Draw(SpriteBatch& spriteBatch)
 	{
@@ -53,4 +53,3 @@ public:
 		if (m_pMap) m_pMap->SetMapComponent(pMapComponent);
 	}
 };
-

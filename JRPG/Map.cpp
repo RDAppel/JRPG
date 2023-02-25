@@ -51,7 +51,7 @@ bool Map::Load(const std::string& path)
 		layerType = Layer::GetTypeByName(*it);
 		if (layerType == Layer::Type::NONE) return false;
 
-		Layer* pLayer = new Layer;
+		Layer* pLayer = new Layer();
 		pLayer->SetType(layerType);
 		m_layers.push_back(pLayer);
 		++it;
@@ -59,9 +59,9 @@ bool Map::Load(const std::string& path)
 		// temp tiles for testing
 		if (layerType == Layer::Type::BACKGROUND)
 		{
-			for (uint32_t y = 0; y < m_dimensions.Y; ++y)
+			for (int y = 0; y < m_dimensions.Y; ++y)
 			{
-				for (uint32_t x = 0; x < m_dimensions.X; ++x)
+				for (int x = 0; x < m_dimensions.X; ++x)
 				{
 					Tile tile;
 					tile.X = x;
@@ -95,9 +95,8 @@ bool Map::Load(const std::string& path)
 		--layersLeft;
 	}
 
-
 	// setup camera
-	m_camera.SetScale(2.0f);
+	m_camera.SetScale(3.0f);
 	m_camera.SetBounds(Region(0, 0, m_dimensions.X * Tile::SIZE, m_dimensions.Y * Tile::SIZE));
 
 	return true;
@@ -106,7 +105,7 @@ bool Map::Load(const std::string& path)
 void Map::SetMapComponent(MapComponent* pMapComponent)
 {
 	m_pMapComponent = pMapComponent;
-	m_camera.SetTarget(pMapComponent);
+	m_camera.SetTarget(m_pMapComponent);
 }
 
 void Map::HandleInput(const InputState& inputState)
@@ -132,12 +131,11 @@ void Map::Draw(SpriteBatch& spriteBatch)
 	Vector2 cameraTopLeft = cameraTilePosition - tilesToCorner;
 	Vector2 cameraBottomRight = cameraTilePosition + tilesToCorner;
 
-	// clamp to map bounds
+	// clamp camera to map bounds
 	cameraTopLeft.X = Math::Clamp(cameraTopLeft.X, 0.0f, m_dimensions.X);
 	cameraTopLeft.Y = Math::Clamp(cameraTopLeft.Y, 0.0f, m_dimensions.Y);
 	cameraBottomRight.X = Math::Clamp(cameraBottomRight.X, 0.0f, m_dimensions.X);
 	cameraBottomRight.Y = Math::Clamp(cameraBottomRight.Y, 0.0f, m_dimensions.Y);
-
 
 	Layer::Type layerType = Layer::Type::NONE;
 	for (Layer* pLayer : m_layers)
@@ -158,7 +156,7 @@ void Map::Draw(SpriteBatch& spriteBatch)
 			pTexture = m_textures[tile.TilesetIndex];
 			int tilesWide = pTexture->GetWidth() / Tile::SIZE;
 
-			Vector2 position(tile.X * Tile::SIZE, tile.Y * Tile::SIZE);
+			Vector2 position = Vector2(tile.X * Tile::SIZE, tile.Y * Tile::SIZE);
 			int tileX = tile.TileIndex % tilesWide * Tile::SIZE;
 			int tileY = tile.TileIndex / tilesWide * Tile::SIZE;
 			Region source(tileX, tileY, Tile::SIZE, Tile::SIZE);
@@ -172,7 +170,6 @@ void Map::Draw(SpriteBatch& spriteBatch)
 			if (xEnd && yEnd) color = Color::PURPLE;
 
 			spriteBatch.Draw(pTexture, position, source, color);
-
 		}
 	}
 

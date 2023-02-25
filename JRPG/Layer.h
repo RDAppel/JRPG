@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "Tile.h"
@@ -5,9 +6,9 @@
 class Layer
 {
 
-public: 
+public:
 
-	enum class Type : uint8_t { NONE, BACKGROUND, INTERACTION, FOREGROUND };
+	enum class Type :uint8_t { NONE, BACKGROUND, INTERACTION, FOREGROUND };
 
 private:
 
@@ -17,7 +18,7 @@ private:
 
 public:
 
-	static const std::string& GetNameOfType(Type type)
+	static const std::string& GetNameOfType(const Type type)
 	{
 		static const std::string names[] = { "None", "Background", "Interaction", "Foreground" };
 		return names[(int)type];
@@ -35,9 +36,9 @@ public:
 		return types.at(name);
 	}
 
-	Layer() { }
+	Layer() {}
 	Layer(const Layer&) = delete;
-	virtual ~Layer() { }
+	virtual ~Layer() {}
 
 	Layer& operator=(const Layer&) = delete;
 
@@ -56,4 +57,3 @@ public:
 	virtual std::vector<Tile>::iterator end() { return m_tiles.end(); }
 
 };
-
