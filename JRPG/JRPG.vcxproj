@@ -188,7 +188,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapComponent.cpp" />
@@ -200,7 +199,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\Test_01.map" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

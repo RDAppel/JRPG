@@ -25,8 +25,6 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_windows.h>
 
-
-
 /* Time */
 #include "GameTime.h"
 
