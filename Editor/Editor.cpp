@@ -78,30 +78,26 @@ void Editor::Update()
 
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-	if (ImGui::BeginPopupModal("New Project", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-	{
-		ImGui::Text("All those beautiful files will be deleted.\nThis operation cannot be undone!");
-		ImGui::Separator();
-		//ImGui::Text("Project Name:");
-		//ImGui::InputText("Name: ", nullptr, 0, 0, 0);
-		ImGui::EndPopup();
-	}
+
+
 
 	ImGui::BeginMainMenuBar();
 
+	std::string menu_action = "";
 	if (ImGui::BeginMenu("File"))
 	{
-		if (ImGui::MenuItem("New Project..."))
-		{
-			ImGui::OpenPopup("New Project");
-		}
+		if (ImGui::MenuItem("New Project...")) menu_action = "new project";
 
 		//ImGui::MenuItem("Open Project");
 		ImGui::Separator();
-		if (ImGui::MenuItem("Exit")) Quit();
+		if (ImGui::MenuItem("Exit"))
+		{
+			Quit();
+		}
 
 		ImGui::EndMenu();
 	}
+
 	if (ImGui::BeginMenu("Edit"))
 	{
 		ImGui::MenuItem("test1");
@@ -131,6 +127,31 @@ void Editor::Update()
 	}
 
 	ImGui::EndMainMenuBar();
+
+
+	if  (menu_action == "new project") ImGui::OpenPopup("New Project##Modal");
+
+	ImGui::SetNextWindowSize(ImVec2(500, 300));
+	ImVec2 vpCenter = ImGui::GetMainViewport()->GetCenter();
+	ImGui::SetNextWindowPos(vpCenter, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+	static char input_buf[64] = "";
+	if (ImGui::BeginPopupModal("New Project##Modal", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		strcpy_s(input_buf, "");
+		ImGui::Text("Project Name:");
+		ImGui::SameLine();
+		ImGui::InputText("##test", input_buf, 64);
+		if (ImGui::Button("OK"))
+		{
+			std::cout << "create project " << input_buf << "\n";
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel")) ImGui::CloseCurrentPopup();
+
+		ImGui::EndPopup();
+	}
+
 
 	// create our own dockspace on the main window
 	bool open = true;
