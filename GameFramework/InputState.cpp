@@ -1,26 +1,29 @@
 
 #include "_PCH.h"
 
+InputState::InputState()
+{
+	al_install_keyboard();
+	al_install_mouse();
+}
+
 void InputState::Update(const GameTime& gameTime)
 {
-	if (al_is_keyboard_installed())
+	m_previousKeyboardState = m_currentKeyboardState;
+	al_get_keyboard_state(&m_currentKeyboardState);
+
+	m_anyNewPressedKeys = false;
+	m_anyNewReleasedKeys = false;
+	for (uint8_t i = 1; i < (uint8_t)Key::MAX; ++i)
 	{
-		m_previousKeyboardState = m_currentKeyboardState;
-		al_get_keyboard_state(&m_currentKeyboardState);
+		bool released = IsNewKeyRelease((Key)i);
+		m_anyNewReleasedKeys |= released;
 
-		m_anyNewPressedKeys = false;
-		m_anyNewReleasedKeys = false;
-		for (uint8_t i = 1; i < (uint8_t)Key::MAX; ++i)
-		{
-			bool released = IsNewKeyRelease((Key)i);
-			m_anyNewReleasedKeys |= released;
+		bool pressed = IsNewKeyPress((Key)i);
+		m_anyNewPressedKeys |= pressed;
 
-			bool pressed = IsNewKeyPress((Key)i);
-			m_anyNewPressedKeys |= pressed;
-
-			if (IsKeyUp((Key)i)) m_pressedKeyTimes[i] = 0;
-			else m_pressedKeyTimes[i] += gameTime.GetTimeElapsed();
-		}
+		if (IsKeyUp((Key)i)) m_pressedKeyTimes[i] = 0;
+		else m_pressedKeyTimes[i] += gameTime.GetTimeElapsed();
 	}
 }
 
