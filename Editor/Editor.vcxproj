@@ -194,9 +194,6 @@
     <ProjectReference Include="..\GameFramework\GameFramework.vcxproj">
       <Project>{4bbf1e79-11b7-4a4f-91b3-26b91463b474}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\JRPG\JRPG.vcxproj">
-      <Project>{f7a60b70-d7f5-4ef3-a144-a7acbd569b3e}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
