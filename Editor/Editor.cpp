@@ -1,4 +1,7 @@
+
 #include "Editor.h"
+#include "ExterntalExe.h"
+
 
 
 Editor::Editor()
@@ -78,6 +81,15 @@ void Editor::Update(const GameTime& gameTime)
 	if (ImGui::BeginMenu("View##MenuItem"))
 	{
 		if (ImGui::MenuItem("Demo##MenuItem", "Alt+D")) s_isDemoVisible = true;
+
+		ImGui::EndMenu();
+	}
+	if (ImGui::BeginMenu("Run##MenuItem"))
+	{
+		if (ImGui::MenuItem("Game##MenuItem"))
+		{
+			(void)ExternalExe::Run(L"JRPG.exe", L"C:\\Users\\Ryan\\Desktop\\JRPG\\Debug");
+		}
 
 		ImGui::EndMenu();
 	}

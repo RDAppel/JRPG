@@ -184,20 +184,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp" />
-    <ClCompile Include="ImGui\imgui.cpp" />
-    <ClCompile Include="ImGui\imgui_demo.cpp" />
-    <ClCompile Include="ImGui\imgui_draw.cpp" />
-    <ClCompile Include="ImGui\imgui_impl_allegro5.cpp" />
-    <ClCompile Include="ImGui\imgui_tables.cpp" />
-    <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h" />
+    <ClInclude Include="ExterntalExe.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameFramework\GameFramework.vcxproj">
       <Project>{4bbf1e79-11b7-4a4f-91b3-26b91463b474}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ImGui\ImGui.vcxproj">
+      <Project>{0a6b5883-5035-4fdb-9fd4-5f84ef6b1171}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

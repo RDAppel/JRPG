@@ -35,6 +35,11 @@ public:
 	{
 		if (!m_pMap) return;
 		m_pMap->HandleInput(inputState);
+
+		if (inputState.IsNewKeyPress(Key::ESCAPE))
+		{
+			ImGui::OpenPopup("Exit");
+		}
 	}
 
 	virtual void Update(const GameTime& gameTime)
