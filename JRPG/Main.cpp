@@ -1,4 +1,10 @@
 
 #include "_PCH.h"
 
-int main() { return (new JRPG())->Run(); }
+int main()
+{
+	JRPG* pJRPG = new JRPG;
+	int errorCode = pJRPG->Run();
+	delete pJRPG;
+	return errorCode;
+}

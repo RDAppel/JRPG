@@ -4,19 +4,22 @@
 int Game::s_screenWidth = 1600;
 int Game::s_screenHeight = 900;
 std::string Game::s_windowTitle = "RPG";
+bool Game::s_windowTitleChanged = false;
 
 
 Game::Game()
 {
-	m_pConsoleHandle = GetConsoleWindow();
+	ImGui::CreateContext();
+
+	srand(time(0));
 
 	m_isAllegroInitialized = al_init();
-	m_resourceManager.SetContentPath("..\\JRPG\\Content\\");
+	m_resourceManager.SetContentPath("..\\JRPG\\Content\\"); // todo: this should not be hard-coded
 
 	m_pScreenManager = new ScreenManager(*this);
 	m_pSpriteBatch = new SpriteBatch;
 
-	srand(time(0));
+	ImGui::StyleColorsDark();
 }
 
 Game::~Game()
@@ -28,6 +31,15 @@ Game::~Game()
 
 void Game::InitializeDisplay()
 {
+	if (m_isUsingImGui)
+	{
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	}
+
 	if (m_requireVSync) al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
 	if (m_isDisplayResizable) al_set_new_display_flags(ALLEGRO_RESIZABLE);
 
@@ -37,9 +49,12 @@ void Game::InitializeDisplay()
 		std::cout << "Couldn't initialize the Allegro display!\nPress enter to quit.";
 		std::cin.get();
 	}
-	
-	m_pDisplayHandle = al_get_win_window_handle(m_pDisplay);
+
+	if (m_isUsingImGui) ImGui_ImplAllegro5_Init(m_pDisplay);
+
 	al_set_window_title(m_pDisplay, s_windowTitle.c_str());
+
+	m_isDisplayInitialized = true;
 }
 
 
@@ -47,7 +62,8 @@ int Game::Run()
 {
 	m_isRunning = true;
 
-	if (!m_isAllegroInitialized) {
+	if (!m_isAllegroInitialized)
+	{
 		std::cout << "Couldn't initialize Allegro!\nPress enter to quit.";
 		std::cin.get();
 	}
@@ -76,37 +92,21 @@ int Game::Run()
 	// need this?
 	al_init_image_addon();
 
-	bool redraw = false;
-
 	while (m_isRunning)
 	{
 		al_wait_for_event(pEventQueue, &event);
 
-		HandleEvent(event);
+		bool redraw = false;
+		HandleEvent(event, redraw);
 		
-		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) Quit();
-		else if (event.type == ALLEGRO_EVENT_KEY_DOWN || event.type == ALLEGRO_EVENT_KEY_UP)
-		{
-			uint8_t mask =
-				ALLEGRO_KEYMOD_CTRL | ALLEGRO_KEYMOD_ALT | ALLEGRO_KEYMOD_SHIFT;
-			uint8_t modifiers = event.keyboard.modifiers & mask;
-			m_pInputState->UpdateModifiers(modifiers);
-		}
-		else if (event.type == ALLEGRO_EVENT_DISPLAY_SWITCH_OUT)
-		{
-			m_gameTime.m_currentTotalTime = al_get_time();
-			al_clear_keyboard_state(m_pDisplay);
-		}
-		else if (event.type == ALLEGRO_EVENT_TIMER)
-		{
-			Update(m_gameTime);
-			redraw = true;
-		}
-
-		if (redraw && al_event_queue_is_empty(pEventQueue))
+		if (m_forceRedraw || (redraw && al_event_queue_is_empty(pEventQueue)))
 		{
 			redraw = false;
+			m_forceRedraw = false;
 			Draw(*m_pSpriteBatch);
+
+			al_flip_display();
+			al_clear_to_color(GetClearColor().GetAllegroColor());
 
 			m_frameCounter++;
 		}
@@ -116,9 +116,48 @@ int Game::Run()
 	al_destroy_event_queue(pEventQueue);
 	al_destroy_display(m_pDisplay);
 
+	if (m_isUsingImGui)
+	{
+		ImGui_ImplAllegro5_Shutdown();
+		ImGui::DestroyContext();
+	}
+
 	return 0;
 }
 
+
+void Game::HandleEvent(ALLEGRO_EVENT& event, bool& redraw)
+{
+	if (m_isUsingImGui) ImGui_ImplAllegro5_ProcessEvent(&event);
+
+	if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+	{
+		Quit();
+	}
+	else if (event.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
+	{
+		if (m_isUsingImGui) ImGui_ImplAllegro5_InvalidateDeviceObjects();
+		al_acknowledge_resize(m_pDisplay);
+		if (m_isUsingImGui) ImGui_ImplAllegro5_CreateDeviceObjects();
+	}
+	else if (event.type == ALLEGRO_EVENT_KEY_DOWN || event.type == ALLEGRO_EVENT_KEY_UP)
+	{
+		uint8_t mask =
+			ALLEGRO_KEYMOD_CTRL | ALLEGRO_KEYMOD_ALT | ALLEGRO_KEYMOD_SHIFT;
+		uint8_t modifiers = event.keyboard.modifiers & mask;
+		m_pInputState->UpdateModifiers(modifiers);
+	}
+	else if (event.type == ALLEGRO_EVENT_DISPLAY_SWITCH_OUT)
+	{
+		m_gameTime.m_currentTotalTime = al_get_time();
+		al_clear_keyboard_state(m_pDisplay);
+	}
+	else if (event.type == ALLEGRO_EVENT_TIMER)
+	{
+		Update(m_gameTime);
+		redraw = true;
+	}
+}
 
 void Game::Update(const GameTime& gameTime)
 {
@@ -126,6 +165,12 @@ void Game::Update(const GameTime& gameTime)
 	m_pInputState->Update(m_gameTime);
 	m_pScreenManager->HandleInput(*m_pInputState);
 	m_pScreenManager->Update(m_gameTime);
+
+	if (s_windowTitleChanged)
+	{
+		al_set_window_title(m_pDisplay, s_windowTitle.c_str());
+		s_windowTitleChanged = false;
+	}
 
 	if (!m_displayFrameRate) return;
 
@@ -151,9 +196,6 @@ void Game::Draw(SpriteBatch& spriteBatch)
 	m_pScreenManager->Draw(spriteBatch);
 
 	if (m_displayFrameRate) DisplayFrameRate();
-
-	al_flip_display();
-	al_clear_to_color(m_clearColor.GetAllegroColor());
 }
 
 
@@ -174,17 +216,4 @@ void Game::DisplayFrameRate()
 		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 9, 0, format, fps);
 		al_draw_textf(pFont, al_map_rgb(0, 255, 0), 10, 10, 0, format, fps);
 	}
-
-}
-
-
-bool Game::GetConsoleInput(std::string& text)
-{
-	if (!m_pConsoleHandle || !m_pDisplayHandle) return false;
-
-	SetForegroundWindow(m_pConsoleHandle);
-	std::getline(std::cin, text);
-	SetForegroundWindow(m_pDisplayHandle);
-
-	return true;
 }

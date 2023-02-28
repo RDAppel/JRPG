@@ -8,7 +8,7 @@ class ExternalExe
 
 public:
 
-	static bool Run(const std::wstring exeName, const std::wstring exeDir,
+	static HANDLE Run(const std::wstring exeName, const std::wstring exeDir,
 		const std::wstring args = L"")
 	{
 		SHELLEXECUTEINFO shExecInfo = { 0 };
@@ -23,15 +23,11 @@ public:
 		shExecInfo.hInstApp = NULL;
 		ShellExecuteEx(&shExecInfo);
 
-		if (!shExecInfo.hProcess) return false;
+		return shExecInfo.hProcess;
+	}
 
-		if (WaitForSingleObject(shExecInfo.hProcess, INFINITE) == 0)
-		{
-			DWORD exitCode = 0;
-			GetExitCodeProcess(shExecInfo.hProcess, &exitCode);
-			return (exitCode == 0);
-		}
-
-		return false;
+	static void Close(HANDLE hProcess)
+	{
+		TerminateProcess(hProcess, 0);
 	}
 };

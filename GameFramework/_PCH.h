@@ -26,6 +26,10 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_windows.h>
 
+/* ImGui */
+#include "imgui.h"
+#include "imgui_impl_allegro5.h"
+
 /* Time */
 #include "GameTime.h"
 

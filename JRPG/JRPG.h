@@ -19,6 +19,7 @@ public:
 		SetRequireVSync(true);
 		SetTargetFramesPerSecond(60);
 		SetClearColor(Color::BLACK);
+		SetUseImGui();
 	}
 
 	virtual ~JRPG() {}
@@ -103,6 +104,28 @@ public:
 		MapScreen *pMapScreen = new MapScreen;
 		GetScreenManager().AddScreen(pMapScreen);
 		pMapScreen->SetMapComponent(pMC);
+	}
+
+	virtual void Update(const GameTime& gameTime) override
+	{
+		Game::Update(gameTime);
+
+		ImGui_ImplAllegro5_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::Begin("Hi");
+		ImGui::End();
+
+		ForceRedraw();
+	}
+
+
+	virtual void Draw(SpriteBatch& spriteBatch)
+	{
+		Game::Draw(spriteBatch);
+
+		ImGui::Render();
+		ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
 	}
 
 };

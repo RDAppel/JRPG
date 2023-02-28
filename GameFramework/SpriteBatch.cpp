@@ -55,7 +55,7 @@ void SpriteBatch::End()
 		}
 	}
 
-	std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
+	//std::cout << "Drawn " << m_drawables.size() << " sprites." << std::endl;
 
 	m_drawables.clear();
 	Transform::IDENTITY.Apply();

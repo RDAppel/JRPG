@@ -2,47 +2,16 @@
 #include "Editor.h"
 #include "ExterntalExe.h"
 
-
-
 Editor::Editor()
 {
-	SetScreenSize(Vector2(1280, 720));
 	SetWindowTitle("JRPG Editor");
-	SetDisplayResizable(true);
-
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	//ImGuiIO& io = ImGui::GetIO();
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-
-	ImGui::StyleColorsDark();
+	SetDisplayResizable();
+	SetUseImGui();
 }
 
 Editor::~Editor()
 {
-	ImGui_ImplAllegro5_Shutdown();
-	ImGui::DestroyContext();
-}
-
-void Editor::InitializeDisplay()
-{
-	Game::InitializeDisplay();
-
-	ImGui_ImplAllegro5_Init(m_pDisplay);
-}
-
-
-void Editor::HandleEvent(ALLEGRO_EVENT& event)
-{
-	ImGui_ImplAllegro5_ProcessEvent(&event);
-
-	if (event.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
-	{
-		ImGui_ImplAllegro5_InvalidateDeviceObjects();
-		al_acknowledge_resize(m_pDisplay);
-		ImGui_ImplAllegro5_CreateDeviceObjects();
-	}
+	if (m_pGameHandle) ExternalExe::Close(m_pGameHandle);
 }
 
 void Editor::Update(const GameTime& gameTime)
@@ -86,20 +55,20 @@ void Editor::Update(const GameTime& gameTime)
 	}
 	if (ImGui::BeginMenu("Run##MenuItem"))
 	{
-		if (ImGui::MenuItem("Game##MenuItem"))
+		if (ImGui::MenuItem("Game##MenuItem", "F5", nullptr, !m_pGameHandle))
 		{
-			(void)ExternalExe::Run(L"JRPG.exe", L"C:\\Users\\Ryan\\Desktop\\JRPG\\Debug");
+			m_pGameHandle = ExternalExe::Run(L"JRPG.exe", L"C:\\Users\\Ryan\\Desktop\\JRPG\\Debug");
 		}
 
 		ImGui::EndMenu();
 	}
 	ImGui::EndMainMenuBar();
 
+	ForceRedraw();
+}
 
-
+void Editor::Draw(SpriteBatch& spriteBatch)
+{
 	ImGui::Render();
 	ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
-
-	al_flip_display();
-	al_clear_to_color(GetClearColor().GetAllegroColor());
 }
