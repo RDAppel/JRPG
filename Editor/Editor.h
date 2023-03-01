@@ -16,6 +16,8 @@ private:
 
 	bool m_isDemoVisible = false;
 
+	Texture* m_pTexture = nullptr;
+
 public:
 
 	Editor();
@@ -30,5 +32,7 @@ public:
 	virtual void InitializeDisplay() override;
 
 	virtual void HandleEvent(ALLEGRO_EVENT& event) override;
+
+	virtual void LoadContent(ResourceManager& resourceManager) override;
 };
 

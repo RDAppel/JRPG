@@ -37,6 +37,8 @@ Editor::Editor()
 	SetWindowTitle("JRPG Editor");
 	SetDisplayFrameRate(false);
 	SetDisplayResizable();
+
+	GetResourceManager().SetContentPath("..\\");
 }
 
 Editor::~Editor()
@@ -52,10 +54,9 @@ void Editor::InitializeDisplay()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;        // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplAllegro5_Init(GetDisplay());
@@ -129,7 +130,7 @@ void Editor::Update()
 	ImGui::EndMainMenuBar();
 
 
-	if  (menu_action == "new project") ImGui::OpenPopup("New Project##Modal");
+	if (menu_action == "new project") ImGui::OpenPopup("New Project##Modal");
 
 	ImGui::SetNextWindowSize(ImVec2(500, 300));
 	ImVec2 vpCenter = ImGui::GetMainViewport()->GetCenter();
@@ -198,7 +199,7 @@ void Editor::Update()
 
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::End();
-	
+
 
 	// Maps window
 	ImVec2 size = io.DisplaySize;
@@ -212,6 +213,19 @@ void Editor::Update()
 
 
 	ImGui::EndTabBar();
+	ImGui::End();
+
+	ImGuiWindowFlags flags = ImGuiWindowFlags_AlwaysAutoResize
+		| ImGuiWindowFlags_AlwaysHorizontalScrollbar
+		| ImGuiWindowFlags_AlwaysVerticalScrollbar;
+	ImGui::SetNextWindowSize(ImVec2(400, 400));
+	int x = m_pTexture->GetWidth();
+	int y = m_pTexture->GetHeight();
+	ImVec2 imgSize(x, y);
+	ImGui::SetNextWindowContentSize(imgSize);
+	ImGui::Begin("Tileset", nullptr, flags);
+	ImGui::Image((void*)m_pTexture->GetAllegroBitmap(), imgSize);
+
 	ImGui::End();
 
 
@@ -236,4 +250,9 @@ void Editor::Resize()
 void Editor::HandleEvent(ALLEGRO_EVENT& event)
 {
 	ImGui_ImplAllegro5_ProcessEvent(&event);
+}
+
+void Editor::LoadContent(ResourceManager& resourceManager)
+{
+	m_pTexture = resourceManager.Load<Texture>("JRPG\\Content\\Textures\\Tilesets\\Exterior_01.png");
 }
