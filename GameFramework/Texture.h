@@ -28,6 +28,8 @@ public:
 	virtual int GetWidth() const { return m_width; }
 	virtual int GetHeight() const { return m_height; }
 
+	virtual Vector2 GetSize() const { return Vector2(m_width, m_height); }
+
 	virtual ALLEGRO_BITMAP* GetAllegroBitmap() const { return m_pBitmap; }
 
 };

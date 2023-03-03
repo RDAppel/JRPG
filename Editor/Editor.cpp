@@ -1,12 +1,16 @@
 
 #include "Editor.h"
 #include "ExterntalExe.h"
+#include "TexturesWindow.h"
 
 Editor::Editor()
 {
 	SetWindowTitle("JRPG Editor");
 	SetDisplayResizable();
 	SetUseImGui();
+
+	m_windows["TexturesWindow"] = new TexturesWindow;
+
 }
 
 Editor::~Editor()
@@ -14,16 +18,17 @@ Editor::~Editor()
 	if (m_pGameHandle) ExternalExe::Close(m_pGameHandle);
 }
 
+void Editor::LoadContent(ResourceManager& resourceManager)
+{
+	m_windows["TexturesWindow"]->LoadContent(resourceManager);
+}
+
 void Editor::Update(const GameTime& gameTime)
 {
 	Game::Update(gameTime);
 
-	ImGui_ImplAllegro5_NewFrame();
-	ImGui::NewFrame();
-
 	static bool s_isDemoVisible = false;
 	if (s_isDemoVisible) ImGui::ShowDemoWindow(&s_isDemoVisible);
-
 
 	ImGui::BeginMainMenuBar();
 	if (ImGui::BeginMenu("File##MenuItem"))
@@ -55,8 +60,9 @@ void Editor::Update(const GameTime& gameTime)
 	}
 	if (ImGui::BeginMenu("Run##MenuItem"))
 	{
-		if (ImGui::MenuItem("Game##MenuItem", "F5", nullptr, !m_pGameHandle))
+		if (ImGui::MenuItem("Game##MenuItem", "F5"))
 		{
+			if (m_pGameHandle) ExternalExe::Close(m_pGameHandle);
 			m_pGameHandle = ExternalExe::Run(L"JRPG.exe", L"C:\\Users\\Ryan\\Desktop\\JRPG\\Debug");
 		}
 
@@ -64,7 +70,33 @@ void Editor::Update(const GameTime& gameTime)
 	}
 	ImGui::EndMainMenuBar();
 
-	ForceRedraw();
+	//dockspace
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->WorkPos);
+	ImGui::SetNextWindowSize(viewport->WorkSize);
+	ImGui::SetNextWindowViewport(viewport->ID);
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking
+		| ImGuiWindowFlags_NoTitleBar
+		| ImGuiWindowFlags_NoCollapse
+		| ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_NoMove
+		| ImGuiWindowFlags_NoBringToFrontOnFocus
+		| ImGuiWindowFlags_NoNavFocus;
+
+	ImGui::Begin("DockSpace", nullptr, windowFlags);
+	ImGui::PopStyleVar(3);
+
+	ImGuiID dockspaceID = ImGui::GetID("DockSpace");
+	ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+
+	ImGui::End();
+
+	m_windows["TexturesWindow"]->Update(gameTime);
 }
 
 void Editor::Draw(SpriteBatch& spriteBatch)

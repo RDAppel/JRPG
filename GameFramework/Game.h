@@ -114,8 +114,6 @@ public:
 
 	virtual void HandleEvent(ALLEGRO_EVENT& event, bool& redraw);
 
-	virtual void ForceRedraw() { m_forceRedraw = true; }
-
 	virtual void Quit() { m_isRunning = false; }
 
 

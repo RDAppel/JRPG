@@ -110,13 +110,9 @@ public:
 	{
 		Game::Update(gameTime);
 
-		ImGui_ImplAllegro5_NewFrame();
-		ImGui::NewFrame();
 
-		ImGui::Begin("Hi");
-		ImGui::End();
-
-		ForceRedraw();
+	/*	ImGui::Begin("Hi");
+		ImGui::End();*/
 	}
 
 

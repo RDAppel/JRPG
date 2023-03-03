@@ -172,6 +172,13 @@ void Game::Update(const GameTime& gameTime)
 		s_windowTitleChanged = false;
 	}
 
+	if (m_isUsingImGui)
+	{
+		ImGui_ImplAllegro5_NewFrame();
+		ImGui::NewFrame();
+		m_forceRedraw = true;
+	}
+
 	if (!m_displayFrameRate) return;
 
 	m_currentTime = al_get_time();
@@ -202,11 +209,22 @@ void Game::Draw(SpriteBatch& spriteBatch)
 void Game::DisplayFrameRate()
 {
 	double fps = m_actualFramesPerSecond;
-	if (!m_pFrameCounterFont)
+
+	if (m_isUsingImGui)
 	{
-		std::cout << "FPS: " << fps << "\n";
+		ImGuiWindowFlags flags = ImGuiWindowFlags_NoResize
+			| ImGuiWindowFlags_NoScrollbar
+			| ImGuiWindowFlags_NoScrollWithMouse
+			| ImGuiWindowFlags_NoBringToFrontOnFocus;
+		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_FirstUseEver);
+		ImGui::Begin("Frame Rate##Window", nullptr, flags);
+		ImGui::Text("Current %.1f", fps);
+		ImGui::Text("Target %.1f", m_targetFramesPerSecond);
+		ImGui::End();
+		return;
 	}
-	else
+
+	if (m_pFrameCounterFont)
 	{
 		ALLEGRO_FONT* pFont = m_pFrameCounterFont->GetAllegroFont();
 		const char* format = "%.1f";
@@ -215,5 +233,8 @@ void Game::DisplayFrameRate()
 		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 11, 0, format, fps);
 		al_draw_textf(pFont, al_map_rgb(0, 0, 0), 11, 9, 0, format, fps);
 		al_draw_textf(pFont, al_map_rgb(0, 255, 0), 10, 10, 0, format, fps);
+		return;
 	}
+
+	std::cout << "FPS: " << fps << "\n";
 }
